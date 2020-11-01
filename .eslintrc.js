@@ -15,6 +15,7 @@ module.exports = {
   ],
   rules: {
     quotes: [2, "double"],
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-empty-interface": [0],
   },
 };
