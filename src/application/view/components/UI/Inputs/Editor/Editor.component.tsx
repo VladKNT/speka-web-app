@@ -5,10 +5,10 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 // @ts-ignore
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import { TCallback } from "../../../../resources/types/common.type";
-import { TCKEditorCallback } from "../../../../resources/types/ckedtitor.type";
+import { TCallback } from "../../../../../../resources/types/common.type";
+import { TCKEditorCallback } from "../../../../../../resources/types/ckedtitor.type";
 
-export interface IEditorComponentOwnProps {
+export interface IEditorOwnProps {
   config?: any;
   data?: string;
   disabled?: boolean;
@@ -18,10 +18,10 @@ export interface IEditorComponentOwnProps {
   onChange?: TCKEditorCallback;
 }
 
-export interface IEditorComponentInjectedProps {}
-export interface IEditorComponentProps extends IEditorComponentOwnProps, IEditorComponentInjectedProps {}
+export interface IEditorInjectedProps {}
+export interface IEditorProps extends IEditorOwnProps, IEditorInjectedProps {}
 
-class Editor extends Component<IEditorComponentProps> {
+class Editor extends Component<IEditorProps> {
   render(): ReactNode {
     return (
       <CKEditor editor={ClassicEditor} {...this.props} />

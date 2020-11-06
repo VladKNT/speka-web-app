@@ -1,0 +1,10 @@
+.b-input {
+  height: 30px;
+  border-radius: 2px;
+  border: solid transparent 1px;
+
+  &:focus {
+    outline:0;
+    border: solid gray 1px;
+  }
+}

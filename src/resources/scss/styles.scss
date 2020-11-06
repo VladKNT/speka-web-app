@@ -1,0 +1,12 @@
+/**
+ * ---------------------------------------------------------------------------------------------------- #
+ *
+ * Main Stylesheet entry file
+ *
+ * all imported files will be bundled to styles.css
+ * in this file it is possible to include files with globbing
+ * to include CSS files, just omit the file extension
+ */
+
+// Basic formatting
+@import "basics";

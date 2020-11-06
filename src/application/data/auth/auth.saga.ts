@@ -1,17 +1,19 @@
 import { AnyAction } from "redux";
+import { put } from "redux-saga/effects";
+
 import { signInRoutine } from "./auth.routine";
 
 export function* signIn(action: ReturnType<typeof signInRoutine.trigger>): Generator<AnyAction> {
   try {
-    signInRoutine.request();
+    yield put(signInRoutine.request());
 
     const { email, password } = action.payload;
     console.info({ email, password });
 
-    signInRoutine.success();
+    yield put(signInRoutine.success());
   } catch (error) {
-    signInRoutine.failure(error.message);
+    yield put(signInRoutine.failure(error.message));
   } finally {
-    signInRoutine.fulfill();
+    yield put(signInRoutine.fulfill());
   }
 }

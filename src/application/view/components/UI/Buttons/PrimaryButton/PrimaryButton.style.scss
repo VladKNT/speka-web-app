@@ -1,0 +1,21 @@
+@import "src/resources/scss/variables/color";
+
+.b-primary-button {
+  height: 35px;
+  border-width: 0;
+  border-radius: 20px;
+  background: $btn-linear-gradient;
+
+  &:active {
+    opacity: .6;
+  }
+
+  &:focus {
+    outline:0;
+  }
+
+  .primary-button-label {
+    color: $white;
+    font-weight: bold;
+  }
+}

@@ -1,3 +1,22 @@
 .b-sign-in-page {
+  align-items: center;
+  justify-content: center;
 
+  .sign-in-card {
+    width: 25%;
+    padding: 40px;
+
+    .sign-in-form {
+      display: flex;
+      flex-direction: column;
+
+      .sign-in-input {
+        margin-bottom: 15px;
+      }
+
+      .sign-in-button {
+        margin-top: 15px;
+      }
+    }
+  }
 }
