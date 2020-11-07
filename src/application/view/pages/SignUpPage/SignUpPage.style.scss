@@ -1,0 +1,22 @@
+.b-sign-up-page {
+  align-items: center;
+  justify-content: center;
+
+  .sign-up-card {
+    width: 25%;
+    padding: 40px;
+
+    .sign-up-form {
+      display: flex;
+      flex-direction: column;
+
+      .sign-up-input {
+        margin-bottom: 15px;
+      }
+
+      .sign-up-button {
+        margin-top: 15px;
+      }
+    }
+  }
+}

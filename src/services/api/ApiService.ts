@@ -24,5 +24,24 @@ export class ApiService {
 
       return config;
     });
+
+    this.axiosInstance.interceptors.response.use(
+      (response) => {
+        if (response.data) {
+          return response.data;
+        }
+
+        return response;
+      },
+      (error) => {
+        const { message } = error?.response?.data;
+
+        if (message) {
+          throw new Error(message);
+        }
+
+        throw error;
+      },
+    );
   }
 }

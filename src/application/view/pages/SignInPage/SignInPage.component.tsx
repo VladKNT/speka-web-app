@@ -12,6 +12,7 @@ import { PrimaryButton } from "../../components/UI/Buttons/PrimaryButton";
 import { ContainerTitle } from "../../components/UI/Titles/ContainerTitle";
 import { ISignInTriggerPayload } from "../../../../resources/types/auth.type";
 import { EMAIL, PASSWORD, SIGN_IN } from "../../../../resources/constants/strings";
+import { ESignInPageFields } from "../../../../resources/types/fields/signInPageFields";
 
 import "./SignInPage.style.scss";
 
@@ -24,8 +25,8 @@ export interface ISignInPageInjectedProps {}
 export interface ISignInPageProps extends ISignInPageOwnProps, ISignInPageInjectedProps {}
 
 interface ISignInPageState {
-  email: string;
-  password: string;
+  [ESignInPageFields.EMAIL]: string;
+  [ESignInPageFields.PASSWORD]: string;
 }
 
 class SignInPage extends Component<ISignInPageProps, ISignInPageState> {
@@ -33,28 +34,24 @@ class SignInPage extends Component<ISignInPageProps, ISignInPageState> {
     super(props);
 
     this.state = {
-      email: "",
-      password: "",
+      [ESignInPageFields.EMAIL]: "",
+      [ESignInPageFields.PASSWORD]: "",
     };
   }
 
-  onChangeEmail = (event: ChangeEvent<HTMLInputElement>): void => {
-    const email = event.target.value;
-    this.setState({ email });
-  }
+  onChangeField = (field: ESignInPageFields) => (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value } = event.target;
 
-  onChangePassword = (event: ChangeEvent<HTMLInputElement>): void => {
-    const password = event.target.value;
-    this.setState({ password });
+    // @ts-ignore
+    this.setState({ [field]: value });
   }
 
   onSubmit = (event: MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
 
     const { signIn } = this.props;
-    const { email, password } = this.state;
 
-    signIn({ email, password });
+    signIn(this.state);
   }
 
   render(): ReactNode {
@@ -64,8 +61,19 @@ class SignInPage extends Component<ISignInPageProps, ISignInPageState> {
 
         <Card className="sign-in-card">
           <form className="sign-in-form">
-            <Input placeholder={EMAIL} type="email" className="sign-in-input" onChange={this.onChangeEmail} />
-            <Input placeholder={PASSWORD} type="password" className="sign-in-input" onChange={this.onChangePassword} />
+            <Input
+              type="email"
+              placeholder={EMAIL}
+              className="sign-in-input"
+              onChange={this.onChangeField(ESignInPageFields.EMAIL)}
+            />
+
+            <Input
+              type="password"
+              placeholder={PASSWORD}
+              className="sign-in-input"
+              onChange={this.onChangeField(ESignInPageFields.PASSWORD)}
+            />
 
             <PrimaryButton text={SIGN_IN} className="sign-in-button" onClick={this.onSubmit} />
           </form>
