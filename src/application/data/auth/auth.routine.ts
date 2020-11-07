@@ -17,3 +17,5 @@ export const signUpRoutine = createRoutine("SIGN_UP", {
   failure: (payload: ISignUpErrorPayload) => (payload),
   trigger: (payload: ISignUpTriggerPayload) => (payload),
 });
+
+export const signOutRoutine = createRoutine("SIGN_OUT");

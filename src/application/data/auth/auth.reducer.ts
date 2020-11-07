@@ -1,7 +1,7 @@
 import { AnyAction } from "redux";
 
-import { signInRoutine, signUpRoutine } from "./auth.routine";
 import { IAuthReducer } from "../../../resources/types/auth.type";
+import { signInRoutine, signOutRoutine, signUpRoutine } from "./auth.routine";
 
 const initialState: IAuthReducer = {
   loading: 0,
@@ -14,7 +14,7 @@ export const authReducer = (state = initialState, action: AnyAction): IAuthReduc
     case signUpRoutine.REQUEST: {
       return {
         ...state,
-        loading: state.loading++,
+        loading: state.loading + 1,
       };
     }
 
@@ -30,8 +30,12 @@ export const authReducer = (state = initialState, action: AnyAction): IAuthReduc
     case signUpRoutine.FULFILL: {
       return {
         ...state,
-        loading: state.loading--,
+        loading: state.loading - 1,
       };
+    }
+
+    case signOutRoutine.TRIGGER: {
+      return initialState;
     }
 
     default: {

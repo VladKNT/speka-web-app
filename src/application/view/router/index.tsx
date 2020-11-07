@@ -4,8 +4,9 @@ import { Switch, BrowserRouter } from "react-router-dom";
 // @ts-ignore
 import { cookies, subscribe, unsubscribe } from "brownies";
 
-import { PrivateRouter } from "./PrivateRouter";
 import { PublicRouter } from "./PublicRouter";
+import { PrivateRouter } from "./PrivateRouter";
+import { Container } from "../components/UI/Containers/Container";
 
 interface IRouterState {
   isAuthenticated: boolean | null;
@@ -46,7 +47,9 @@ export class Router extends Component<unknown, IRouterState> {
     return (
       <BrowserRouter>
         <Switch>
-          {isAuthenticated ? <PrivateRouter /> : <PublicRouter />}
+          <Container>
+            {isAuthenticated ? <PrivateRouter /> : <PublicRouter />}
+          </Container>
         </Switch>
       </BrowserRouter>
     );

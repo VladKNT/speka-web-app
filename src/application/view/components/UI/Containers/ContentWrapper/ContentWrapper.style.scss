@@ -1,0 +1,11 @@
+@import "src/resources/scss/variables/color";
+
+.b-content-wrapper {
+  flex: 1;
+  display: flex;
+  margin: 30px;
+  padding: 30px;
+  border-radius: 8px;
+  background: $white;
+  flex-direction: column;
+}

@@ -7,7 +7,6 @@ import { Input } from "../../components/UI/Inputs/Input";
 import { IRootReducer } from "../../../data/root.reducer";
 import { Card } from "../../components/UI/Containers/Card";
 import { signUpRoutine } from "../../../data/auth/auth.routine";
-import { Container } from "../../components/UI/Containers/Container";
 import { PrimaryButton } from "../../components/UI/Buttons/PrimaryButton";
 import { ContainerTitle } from "../../components/UI/Titles/ContainerTitle";
 import { ISignUpTriggerPayload } from "../../../../resources/types/auth.type";
@@ -69,7 +68,7 @@ class SignUpPage extends Component<ISignUpPageProps, ISignUpPageState> {
 
   render(): ReactNode {
     return (
-      <Container className="b-sign-up-page">
+      <div className="b-sign-up-page">
         <ContainerTitle text={SIGN_UP} />
 
         <Card className="sign-up-card">
@@ -109,7 +108,7 @@ class SignUpPage extends Component<ISignUpPageProps, ISignUpPageState> {
             <PrimaryButton text={SIGN_UP} className="sign-up-button" onClick={this.onSubmit} />
           </form>
         </Card>
-      </Container>
+      </div>
     );
   }
 }

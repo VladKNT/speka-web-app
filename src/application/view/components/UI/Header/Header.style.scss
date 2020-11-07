@@ -1,0 +1,40 @@
+@import "src/resources/scss/variables/color";
+
+.b-header {
+  padding: 10px 30px;
+  display: flex;
+  border-radius: 8px;
+  align-items: center;
+  margin: 30px 30px 0 30px;
+  background-color: $white;
+  justify-content: space-between;
+
+  .header-left-section {
+    display: flex;
+    align-items: center;
+
+    .organization-name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .organization-logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+
+  .header-right-section {
+    display: flex;
+    align-items: center;
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      margin-left: 5px;
+      border-radius: 20px;
+    }
+  }
+}
