@@ -1,0 +1,9 @@
+@import "src/resources/scss/variables/color";
+
+.b-container {
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: $bg-linear-gradient;
+}

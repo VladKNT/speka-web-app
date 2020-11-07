@@ -3,6 +3,9 @@ import { createRoutine } from "redux-saga-routines";
 import {
   ISignInErrorPayload,
   ISignInTriggerPayload,
+
+  ISignUpErrorPayload,
+  ISignUpTriggerPayload,
 } from "../../../resources/types/auth.type";
 
 export const signInRoutine = createRoutine("SIGN_IN", {
@@ -10,4 +13,7 @@ export const signInRoutine = createRoutine("SIGN_IN", {
   trigger: (payload: ISignInTriggerPayload) => (payload),
 });
 
-export const signUpRoutine = createRoutine("SIGN_UP");
+export const signUpRoutine = createRoutine("SIGN_UP", {
+  failure: (payload: ISignUpErrorPayload) => (payload),
+  trigger: (payload: ISignUpTriggerPayload) => (payload),
+});

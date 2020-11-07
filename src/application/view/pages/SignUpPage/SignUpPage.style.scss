@@ -1,20 +1,20 @@
-.b-sign-in-page {
+.b-sign-up-page {
   align-items: center;
   justify-content: center;
 
-  .sign-in-card {
+  .sign-up-card {
     width: 25%;
     padding: 40px;
 
-    .sign-in-form {
+    .sign-up-form {
       display: flex;
       flex-direction: column;
 
-      .sign-in-input {
+      .sign-up-input {
         margin-bottom: 15px;
       }
 
-      .sign-in-button {
+      .sign-up-button {
         margin-top: 15px;
       }
     }

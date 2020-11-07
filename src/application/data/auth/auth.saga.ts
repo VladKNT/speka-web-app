@@ -1,17 +1,47 @@
-import { AnyAction } from "redux";
-import { signInRoutine } from "./auth.routine";
+// @ts-ignore
+import { cookies } from "brownies";
+import { put } from "redux-saga/effects";
 
-export function* signIn(action: ReturnType<typeof signInRoutine.trigger>): Generator<AnyAction> {
+import { signInRoutine, signUpRoutine } from "./auth.routine";
+import { AuthService } from "../../../services/api/AuthService";
+
+//TODO: Add library for fingerprint detection
+const fingerprint = "fingerprint";
+const AuthApi = new AuthService();
+
+export function* signIn(action: ReturnType<typeof signInRoutine.trigger>) {
   try {
-    signInRoutine.request();
+    yield put(signInRoutine.request());
 
-    const { email, password } = action.payload;
-    console.info({ email, password });
+    const res = yield AuthApi.signIn({ ...action.payload, fingerprint });
 
-    signInRoutine.success();
+    cookies.accessToken = res.accessToken;
+    cookies.refreshToken = res.refreshToken;
+
+    yield put(signInRoutine.success());
   } catch (error) {
-    signInRoutine.failure(error.message);
+    yield put(signInRoutine.failure({ error: error.message }));
   } finally {
-    signInRoutine.fulfill();
+    yield put(signInRoutine.fulfill());
+  }
+}
+
+export function* signUp(action: ReturnType<typeof signUpRoutine.trigger>) {
+  try {
+    yield put(signUpRoutine.request());
+
+    const {
+      accessToken,
+      refreshToken,
+    } = yield AuthApi.signUp({ ...action.payload, fingerprint });
+
+    cookies.accessToken = accessToken;
+    cookies.refreshToken = refreshToken;
+
+    yield put(signUpRoutine.success());
+  } catch (error) {
+    yield put(signInRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(signUpRoutine.fulfill());
   }
 }

@@ -1,0 +1,7 @@
+@import "src/resources/scss/variables/color";
+
+.b-card {
+  border-radius: 8px;
+  height: fit-content;
+  background-color: $bg-white-rgba;
+}
