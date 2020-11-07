@@ -1,20 +1,54 @@
-import React, { FC } from "react";
-import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+import React, { Component, ReactNode } from "react";
+import { Switch, BrowserRouter } from "react-router-dom";
 
-import { SignInPage } from "../pages/SignInPage";
-import { SignUnPage } from "../pages/SignUpPage";
-import { NotFoundPage } from "../pages/NotFoundPage";
+// @ts-ignore
+import { cookies, subscribe, unsubscribe } from "brownies";
 
-export const Router: FC = () => {
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/login" component={SignInPage} />
-        <Route exact path="/registration" component={SignUnPage} />
+import { PrivateRouter } from "./PrivateRouter";
+import { PublicRouter } from "./PublicRouter";
 
-        <Route exact path="/404" component={NotFoundPage} />
-        <Redirect to="/404" />
-      </Switch>
-    </BrowserRouter>
-  );
-};
+interface IRouterState {
+  isAuthenticated: boolean | null;
+}
+
+export class Router extends Component<unknown, IRouterState> {
+  constructor(props: unknown) {
+    super(props);
+
+    this.state = {
+      isAuthenticated: null,
+    }
+  }
+
+  componentDidMount(): void {
+    const { accessToken } = cookies;
+    this.onCheckAccessToken(accessToken);
+
+    subscribe(cookies, "accessToken", this.onCheckAccessToken);
+  }
+
+  componentWillUnmount(): void {
+    unsubscribe(this.onCheckAccessToken);
+  }
+
+  onCheckAccessToken = (accessToken?: string): void => {
+    const isAuthenticated = Boolean(accessToken);
+    this.setState({ isAuthenticated });
+  }
+
+  render(): ReactNode {
+    const { isAuthenticated } = this.state;
+
+    if (isAuthenticated === null) {
+      return null;
+    }
+
+    return (
+      <BrowserRouter>
+        <Switch>
+          {isAuthenticated ? <PrivateRouter /> : <PublicRouter />}
+        </Switch>
+      </BrowserRouter>
+    );
+  }
+}
