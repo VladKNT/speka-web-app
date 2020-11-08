@@ -2,6 +2,7 @@ import React, { PureComponent, ReactNode } from "react";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { IUser } from "../../../../../resources/types/user.type";
+import { SPEKA } from "../../../../../resources/constants/strings";
 import { TCallback } from "../../../../../resources/types/common.type";
 
 import "./Header.style.scss";
@@ -56,10 +57,19 @@ class Header extends PureComponent<IHeaderProps> {
     );
   }
 
+  renderCentralSection(): ReactNode {
+    return (
+      <div className="header-central-section">
+        <label className="header-brand">{SPEKA}</label>
+      </div>
+    )
+  }
+
   render(): ReactNode {
     return (
       <div className="b-header">
         {this.renderLeftSection()}
+        {this.renderCentralSection()}
         {this.renderRightSection()}
       </div>
     );
