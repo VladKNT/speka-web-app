@@ -6,6 +6,7 @@ import { Redirect, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Header } from "../components/UI/Header";
+import { ProjectPage } from "../pages/ProjectPage";
 import { DashboardPage } from "../pages/DasboardPage";
 import { IRootReducer } from "../../data/root.reducer";
 import { signOutRoutine } from "../../data/auth/auth.routine";
@@ -36,6 +37,8 @@ export const PrivateRouter: FC = () => {
 
       <ContentWrapper>
         <Route exact path="/" component={DashboardPage} />
+        <Route exact path="/project/:id" component={ProjectPage} />
+
         <Redirect to="/" />
       </ContentWrapper>
     </>

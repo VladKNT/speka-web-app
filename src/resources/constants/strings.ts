@@ -2,6 +2,7 @@ export const EDIT = "Edit";
 export const VIEW = "View";
 export const SPEKA = "SPEKA";
 export const EMAIL = "Email";
+export const PHASE = "Phase";
 export const SIGN_IN = "Sign In";
 export const SIGN_UP = "Sign Up";
 export const PASSWORD = "Password";

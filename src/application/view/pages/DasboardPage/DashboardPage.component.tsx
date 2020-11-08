@@ -2,6 +2,7 @@ import React, { Component, ReactNode } from "react";
 
 import { Dispatch } from "redux";
 import { connect } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
 import { IProject } from "../../../../resources/types/project.type";
@@ -15,7 +16,7 @@ export interface IDashboardPageOwnProps {
   getProjects: TCallback;
 }
 
-export interface IDashboardPageInjectedProps {}
+export interface IDashboardPageInjectedProps extends RouteComponentProps {}
 export interface IDashboardPageProps extends IDashboardPageOwnProps, IDashboardPageInjectedProps {}
 
 class DashboardPage extends Component<IDashboardPageProps> {
@@ -25,11 +26,7 @@ class DashboardPage extends Component<IDashboardPageProps> {
   }
 
   onOpenProject = (id: string): void => {
-    console.info(id);
-  }
-
-  onEditProject = (id: string): void => {
-    console.info(id);
+    this.props.history.push(`project/${id}`);
   }
 
   render(): ReactNode {
@@ -40,7 +37,6 @@ class DashboardPage extends Component<IDashboardPageProps> {
         <ProjectTable
           projects={projects}
           onOpen={this.onOpenProject}
-          onEdit={this.onEditProject}
         />
       </div>
     );

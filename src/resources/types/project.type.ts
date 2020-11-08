@@ -11,11 +11,18 @@ export interface IProject {
   id: string;
   name: string;
   phase: EPhase;
-  createdAt: number;
+  createdAt: string;
   description: string;
-  updatedAt: number | null;
-  deletedAt: number | null;
+  updatedAt: string | null;
+  deletedAt: string | null;
   previewUrl: string | null;
+}
+
+export interface IEditProjectDto {
+  id: string;
+  name?: string;
+  phase?: EPhase;
+  description?: string;
 }
 
 export interface IProjectReducer {
@@ -25,8 +32,27 @@ export interface IProjectReducer {
   selectedProject: IProject | null;
 }
 
-export interface IGetProjectSuccessPayload {
+// Get project
+export interface IGetProjectTriggerPayload {
+  id: string;
+}
+
+export interface IGetUserProjectsSuccessPayload {
   projects: IProject[];
 }
 
 export interface IGetProjectErrorPayload extends IErrorPayload {}
+
+// Get user projects
+
+export interface IGetProjectSuccessPayload {
+  project: IProject;
+}
+
+export interface IGetUserProjectsErrorPayload extends IErrorPayload {}
+
+// Edit Project
+
+export interface IEditProjectErrorPayload extends IErrorPayload {}
+export interface IEditProjectTriggerPayload extends IEditProjectDto {}
+export interface IEditProjectSuccessPayload extends IGetProjectSuccessPayload {}
