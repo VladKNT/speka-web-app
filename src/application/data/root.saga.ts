@@ -7,7 +7,13 @@ import * as projectSaga from "./project/project.saga";
 
 import { getCurrentUserRoutine } from "./user/user.routine";
 import { signInRoutine, signUpRoutine } from "./auth/auth.routine";
-import { editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project/project.routine";
+
+import {
+  getProjectRoutine,
+  getProjectsRoutine,
+  editProjectRoutine,
+  createProjectRoutine
+} from "./project/project.routine";
 
 export function* rootSaga(): Generator<AnyAction> {
   yield all([
@@ -15,10 +21,11 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(signUpRoutine.TRIGGER, authSaga.signUp),
     yield takeLatest(signUpRoutine.TRIGGER, authSaga.signUp),
 
-    yield takeLatest(getCurrentUserRoutine.TRIGGER, userSaga.gerCurrentUser),
+    yield takeLatest(getCurrentUserRoutine.TRIGGER, userSaga.getCurrentUser),
 
-    yield takeLatest(getProjectRoutine.TRIGGER, projectSaga.gerProject),
-    yield takeLatest(getProjectsRoutine.TRIGGER, projectSaga.gerProjects),
+    yield takeLatest(getProjectRoutine.TRIGGER, projectSaga.getProject),
+    yield takeLatest(getProjectsRoutine.TRIGGER, projectSaga.getProjects),
     yield takeLatest(editProjectRoutine.TRIGGER, projectSaga.editProject),
+    yield takeLatest(createProjectRoutine.TRIGGER, projectSaga.createProject),
   ]);
 }

@@ -1,0 +1,14 @@
+@import "src/resources/scss/variables/color";
+
+.b-dashboard-page {
+  .dashboard-button-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: flex-end;
+
+    .dashboard-add-button {
+      color: $white;
+      background: $btn-linear-gradient;
+    }
+  }
+}

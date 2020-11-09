@@ -18,6 +18,11 @@ export interface IProject {
   previewUrl: string | null;
 }
 
+export interface ICreateProjectDto {
+  name: string;
+  description: string;
+}
+
 export interface IEditProjectDto {
   id: string;
   name?: string;
@@ -50,6 +55,12 @@ export interface IGetProjectSuccessPayload {
 }
 
 export interface IGetUserProjectsErrorPayload extends IErrorPayload {}
+
+// Create Project
+
+export interface ICreateProjectErrorPayload extends IErrorPayload {}
+export interface ICreateProjectTriggerPayload extends ICreateProjectDto {}
+export interface ICreateProjectSuccessPayload extends IGetProjectSuccessPayload {}
 
 // Edit Project
 

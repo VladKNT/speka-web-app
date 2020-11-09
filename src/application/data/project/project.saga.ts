@@ -3,11 +3,11 @@ import { put, select } from "redux-saga/effects";
 import { IRootReducer } from "../root.reducer";
 import { IProject } from "../../../resources/types/project.type";
 import { ProjectService } from "../../../services/api/ProjectService";
-import { editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
+import { createProjectRoutine, editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
 
 const ProjectApi = new ProjectService();
 
-export function* gerProject(action: ReturnType<typeof getProjectRoutine.trigger>) {
+export function* getProject(action: ReturnType<typeof getProjectRoutine.trigger>) {
   try {
     yield put(getProjectRoutine.request());
     const project = yield ProjectApi.getProjectById(action.payload.id);
@@ -19,7 +19,7 @@ export function* gerProject(action: ReturnType<typeof getProjectRoutine.trigger>
   }
 }
 
-export function* gerProjects() {
+export function* getProjects() {
   try {
     yield put(getProjectsRoutine.request());
     const projects = yield ProjectApi.getUserProjectList();
@@ -28,6 +28,18 @@ export function* gerProjects() {
     yield put(getProjectsRoutine.failure({ error: error.message }));
   } finally {
     yield put(getProjectsRoutine.fulfill());
+  }
+}
+
+export function* createProject(action: ReturnType<typeof createProjectRoutine.trigger>) {
+  try {
+    yield put(createProjectRoutine.request());
+    const project = yield ProjectApi.createProject(action.payload);
+    yield put(createProjectRoutine.success({ project }));
+  } catch (error) {
+    yield put(createProjectRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(createProjectRoutine.fulfill());
   }
 }
 

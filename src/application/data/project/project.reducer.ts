@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 
 import { signOutRoutine } from "../auth/auth.routine";
 import { IProjectReducer } from "../../../resources/types/project.type";
-import { editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
+import { createProjectRoutine, editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
 
 const initialState: IProjectReducer = {
   loading: 0,
@@ -15,7 +15,8 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
   switch (action.type) {
     case getProjectRoutine.REQUEST:
     case getProjectsRoutine.REQUEST:
-    case editProjectRoutine.REQUEST: {
+    case editProjectRoutine.REQUEST:
+    case createProjectRoutine.REQUEST: {
       return {
         ...state,
         loading: state.loading + 1,
@@ -37,9 +38,17 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
       };
     }
 
+    case createProjectRoutine.SUCCESS: {
+      return {
+        ...state,
+        projects: [action.payload.project, ...state.projects],
+      };
+    }
+
     case getProjectRoutine.FAILURE:
     case getProjectsRoutine.FAILURE:
-    case editProjectRoutine.FAILURE: {
+    case editProjectRoutine.FAILURE:
+    case createProjectRoutine.FAILURE: {
       return {
         ...state,
         error: action.payload.message,

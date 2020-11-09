@@ -1,6 +1,6 @@
 import { ApiService } from "./ApiService";
-import { IEditProjectDto, IProject } from "../../resources/types/project.type";
 import { GET_USER_PROJECT_LIST_URL, PROJECT_URL } from "../../resources/constants/urls";
+import { ICreateProjectDto, IEditProjectDto, IProject } from "../../resources/types/project.type";
 
 export class ProjectService extends ApiService {
   constructor() {
@@ -13,6 +13,10 @@ export class ProjectService extends ApiService {
 
   getUserProjectList(): Promise<IProject[]> {
     return this.axiosInstance.get(GET_USER_PROJECT_LIST_URL);
+  }
+
+  createProject(createProjectDto: ICreateProjectDto): Promise<IProject> {
+    return this.axiosInstance.post(PROJECT_URL, createProjectDto);
   }
 
   editProject(editProjectDto: IEditProjectDto): Promise<void> {

@@ -12,4 +12,5 @@ export const LAST_UPDATE = "Last update";
 export const DESCRIPTION = "Description";
 export const PROJECT_NAME = "Project name";
 export const CREATION_DATE = "Creation date";
+export const CREATE_PROJECT = "Create project";
 export const CONTACT_NUMBER = "Contact number";

@@ -5,7 +5,7 @@ import { UserService } from "../../../services/api/UserService";
 
 const UserApi = new UserService();
 
-export function* gerCurrentUser() {
+export function* getCurrentUser() {
   try {
     yield put(getCurrentUserRoutine.request());
     const user = yield UserApi.getCurrentUser();
