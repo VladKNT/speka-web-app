@@ -12,7 +12,8 @@ import {
   getProjectRoutine,
   getProjectsRoutine,
   editProjectRoutine,
-  createProjectRoutine
+  createProjectRoutine,
+  getProjectComponentsRoutine,
 } from "./project/project.routine";
 
 export function* rootSaga(): Generator<AnyAction> {
@@ -27,5 +28,6 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(getProjectsRoutine.TRIGGER, projectSaga.getProjects),
     yield takeLatest(editProjectRoutine.TRIGGER, projectSaga.editProject),
     yield takeLatest(createProjectRoutine.TRIGGER, projectSaga.createProject),
+    yield takeLatest(getProjectComponentsRoutine.TRIGGER, projectSaga.getProjectComponents),
   ]);
 }

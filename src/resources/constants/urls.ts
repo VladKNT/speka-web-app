@@ -9,3 +9,6 @@ export const GET_CURRENT_USER_URL = `${USER_URL}/me`;
 
 export const PROJECT_URL = "project";
 export const GET_USER_PROJECT_LIST_URL = `${PROJECT_URL}/list`;
+
+export const COMPONENT_URL = "component";
+export const COMPONENT_LIST_URL = `${COMPONENT_URL}/list`;

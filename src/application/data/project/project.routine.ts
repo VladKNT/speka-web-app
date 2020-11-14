@@ -15,6 +15,10 @@ import {
 
   IGetUserProjectsErrorPayload,
   IGetUserProjectsSuccessPayload,
+
+  IGetProjectComponentsErrorPayload,
+  IGetProjectComponentsSuccessPayload,
+  IGetProjectComponentsTriggerPayload,
 } from "../../../resources/types/project.type";
 
 export const getProjectRoutine = createRoutine("GET_PROJECT", {
@@ -26,6 +30,12 @@ export const getProjectRoutine = createRoutine("GET_PROJECT", {
 export const getProjectsRoutine = createRoutine("GET_PROJECTS", {
   failure: (payload: IGetUserProjectsErrorPayload) => (payload),
   success: (payload: IGetUserProjectsSuccessPayload) => (payload),
+});
+
+export const getProjectComponentsRoutine = createRoutine("GET_PROJECT_COMPONENTS", {
+  failure: (payload: IGetProjectComponentsErrorPayload) => (payload),
+  success: (payload: IGetProjectComponentsSuccessPayload) => (payload),
+  trigger: (payload: IGetProjectComponentsTriggerPayload) => (payload),
 });
 
 export const createProjectRoutine = createRoutine("CREATE_PROJECT", {

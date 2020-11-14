@@ -3,7 +3,14 @@ import { put, select } from "redux-saga/effects";
 import { IRootReducer } from "../root.reducer";
 import { IProject } from "../../../resources/types/project.type";
 import { ProjectService } from "../../../services/api/ProjectService";
-import { createProjectRoutine, editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
+
+import {
+  getProjectRoutine,
+  getProjectsRoutine,
+  editProjectRoutine,
+  createProjectRoutine,
+  getProjectComponentsRoutine
+} from "./project.routine";
 
 const ProjectApi = new ProjectService();
 
@@ -28,6 +35,18 @@ export function* getProjects() {
     yield put(getProjectsRoutine.failure({ error: error.message }));
   } finally {
     yield put(getProjectsRoutine.fulfill());
+  }
+}
+
+export function* getProjectComponents(action: ReturnType<typeof getProjectComponentsRoutine.trigger>) {
+  try {
+    yield put(getProjectComponentsRoutine.request());
+    const components = yield ProjectApi.getProjectComponentList(action.payload.id);
+    yield put(getProjectComponentsRoutine.success({ components }));
+  } catch (error) {
+    yield put(getProjectComponentsRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(getProjectComponentsRoutine.fulfill());
   }
 }
 

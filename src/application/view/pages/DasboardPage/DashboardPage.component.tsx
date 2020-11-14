@@ -100,7 +100,7 @@ class DashboardPage extends Component<IDashboardPageProps, IState> {
 
         <ProjectTable
           projects={projects}
-          onOpen={this.onOpenProject}
+          onClick={this.onOpenProject}
         />
       </div>
     );

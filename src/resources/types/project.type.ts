@@ -1,4 +1,5 @@
 import { IErrorPayload } from "./common.type";
+import { IComponent } from "./component.type";
 
 export enum EPhase {
   INITIAL = "Initial",
@@ -35,6 +36,7 @@ export interface IProjectReducer {
   error: string | null;
   projects: IProject[];
   selectedProject: IProject | null;
+  selectedProjectComponents: IComponent[];
 }
 
 // Get project
@@ -67,3 +69,15 @@ export interface ICreateProjectSuccessPayload extends IGetProjectSuccessPayload 
 export interface IEditProjectErrorPayload extends IErrorPayload {}
 export interface IEditProjectTriggerPayload extends IEditProjectDto {}
 export interface IEditProjectSuccessPayload extends IGetProjectSuccessPayload {}
+
+// Get Project Components
+
+export interface IGetProjectComponentsTriggerPayload {
+  id: string;
+}
+
+export interface IGetProjectComponentsSuccessPayload {
+  components: IComponent[];
+}
+
+export interface IGetProjectComponentsErrorPayload extends IErrorPayload {}

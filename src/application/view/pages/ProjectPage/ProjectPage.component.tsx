@@ -6,15 +6,23 @@ import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
 import { ProjectInfo } from "../../components/ProjectInfo";
+import { IComponent } from "../../../../resources/types/component.type";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
+import { ComponentTable } from "../../components/UI/Tables/ComponentTable";
 import { EEditProjectFields } from "../../../../resources/types/fields/editProjectFields";
-import { editProjectRoutine, getProjectRoutine } from "../../../data/project/project.routine";
+
+import {
+  editProjectRoutine,
+  getProjectRoutine,
+  getProjectComponentsRoutine,
+} from "../../../data/project/project.routine";
 
 import {
   EPhase,
   IProject,
   IGetProjectTriggerPayload,
   IEditProjectTriggerPayload,
+  IGetProjectComponentsTriggerPayload,
 } from "../../../../resources/types/project.type";
 
 import "./ProjectPage.style.scss";
@@ -22,9 +30,11 @@ import "./ProjectPage.style.scss";
 export interface IProjectPageOwnProps {
   loading: number;
   project: IProject | null;
+  components: IComponent[];
 
   onGetProject: (payload: IGetProjectTriggerPayload) => void,
   onEditProject: (payload: IEditProjectTriggerPayload) => void,
+  onGetProjectComponents: (payload: IGetProjectComponentsTriggerPayload) => void,
 }
 
 export interface IProjectPageInjectedProps extends RouteComponentProps<IIdRouteParam> {}
@@ -54,10 +64,11 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
   }
 
   componentDidMount(): void {
-    const { match, onGetProject } = this.props;
+    const { match, onGetProject, onGetProjectComponents } = this.props;
 
     const { id } = match.params;
     onGetProject({ id });
+    onGetProjectComponents({ id });
   }
 
   onStartEditing = (): void => {
@@ -89,6 +100,10 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
     this.onEndEditing();
   }
 
+  onOpenComponent= (id: string): void => {
+    this.props.history.push(`component/${id}`);
+  };
+
   onChangeField = (field: EEditProjectFields, value: string | EPhase): void => {
     // @ts-ignore
     this.setState((prevState) => {
@@ -102,7 +117,7 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
   }
 
   render(): ReactNode {
-    const { project } = this.props;
+    const { project, components } = this.props;
     const { isEditing, editInfo } = this.state;
 
     if (!project) {
@@ -120,17 +135,22 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
           onChangeField={this.onChangeField}
           onStartEditing={this.onStartEditing}
         />
+
+        <div className="project-table-container">
+          <ComponentTable components={components} onClick={this.onOpenComponent} />
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state: IRootReducer) => {
-  const { loading, selectedProject } = state.projectReducer;
+  const { loading, selectedProject, selectedProjectComponents } = state.projectReducer;
 
   return {
     loading,
     project: selectedProject,
+    components: selectedProjectComponents,
   }
 }
 
@@ -138,6 +158,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onGetProject: (payload: IGetProjectTriggerPayload) => dispatch(getProjectRoutine.trigger(payload)),
     onEditProject: (payload: IEditProjectTriggerPayload) => dispatch(editProjectRoutine.trigger(payload)),
+    onGetProjectComponents: (payload: IGetProjectComponentsTriggerPayload) => dispatch(getProjectComponentsRoutine.trigger(payload)),
   }
 }
 

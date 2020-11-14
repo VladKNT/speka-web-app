@@ -23,7 +23,7 @@ import "./ProjectTable.style.scss";
 
 export interface IProjectTableOwnProps {
   projects: IProject[];
-  onOpen: TStringCallback;
+  onClick: TStringCallback;
 }
 
 export interface IProjectTableInjectedProps {}
@@ -31,8 +31,8 @@ export interface IProjectTableProps extends IProjectTableOwnProps, IProjectTable
 
 class ProjectTable extends Component<IProjectTableProps> {
   onOpen = (id: string) => (): void => {
-    const { onOpen } = this.props;
-    onOpen(id);
+    const { onClick } = this.props;
+    onClick(id);
   }
 
   renderBody(): ReactNodeArray {

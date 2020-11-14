@@ -1,3 +1,7 @@
 @import "src/resources/scss/variables/color";
 
-.b-project-page {}
+.b-project-page {
+  .project-table-container {
+    padding: 20px 0;
+  }
+}

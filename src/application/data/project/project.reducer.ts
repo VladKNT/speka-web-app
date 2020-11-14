@@ -2,13 +2,21 @@ import { AnyAction } from "redux";
 
 import { signOutRoutine } from "../auth/auth.routine";
 import { IProjectReducer } from "../../../resources/types/project.type";
-import { createProjectRoutine, editProjectRoutine, getProjectRoutine, getProjectsRoutine } from "./project.routine";
+
+import {
+  getProjectRoutine,
+  getProjectsRoutine,
+  editProjectRoutine,
+  createProjectRoutine,
+  getProjectComponentsRoutine,
+} from "./project.routine";
 
 const initialState: IProjectReducer = {
   loading: 0,
   error: null,
   projects: [],
   selectedProject: null,
+  selectedProjectComponents: [],
 };
 
 export const projectReducer = (state = initialState, action: AnyAction): IProjectReducer => {
@@ -16,7 +24,8 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
     case getProjectRoutine.REQUEST:
     case getProjectsRoutine.REQUEST:
     case editProjectRoutine.REQUEST:
-    case createProjectRoutine.REQUEST: {
+    case createProjectRoutine.REQUEST:
+    case getProjectComponentsRoutine.REQUEST: {
       return {
         ...state,
         loading: state.loading + 1,
@@ -45,17 +54,29 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
       };
     }
 
+    case getProjectComponentsRoutine.SUCCESS: {
+      return {
+        ...state,
+        selectedProjectComponents: action.payload.components,
+      };
+    }
+
     case getProjectRoutine.FAILURE:
     case getProjectsRoutine.FAILURE:
     case editProjectRoutine.FAILURE:
-    case createProjectRoutine.FAILURE: {
+    case createProjectRoutine.FAILURE:
+    case getProjectComponentsRoutine.FAILURE: {
       return {
         ...state,
         error: action.payload.message,
       };
     }
 
-    case getProjectsRoutine.FULFILL: {
+    case getProjectRoutine.FULFILL:
+    case getProjectsRoutine.FULFILL:
+    case editProjectRoutine.FULFILL:
+    case createProjectRoutine.FULFILL:
+    case getProjectComponentsRoutine.FULFILL: {
       return {
         ...state,
         loading: state.loading - 1,

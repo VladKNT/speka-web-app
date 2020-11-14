@@ -1,6 +1,7 @@
 import { ApiService } from "./ApiService";
-import { GET_USER_PROJECT_LIST_URL, PROJECT_URL } from "../../resources/constants/urls";
+import { IComponent } from "../../resources/types/component.type";
 import { ICreateProjectDto, IEditProjectDto, IProject } from "../../resources/types/project.type";
+import { COMPONENT_LIST_URL, GET_USER_PROJECT_LIST_URL, PROJECT_URL } from "../../resources/constants/urls";
 
 export class ProjectService extends ApiService {
   constructor() {
@@ -13,6 +14,10 @@ export class ProjectService extends ApiService {
 
   getUserProjectList(): Promise<IProject[]> {
     return this.axiosInstance.get(GET_USER_PROJECT_LIST_URL);
+  }
+
+  getProjectComponentList(id: string): Promise<IComponent[]> {
+    return this.axiosInstance.get(`${PROJECT_URL}/${id}/${COMPONENT_LIST_URL}`);
   }
 
   createProject(createProjectDto: ICreateProjectDto): Promise<IProject> {
