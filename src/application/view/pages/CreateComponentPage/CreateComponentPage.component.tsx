@@ -7,6 +7,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { IRootReducer } from "../../../data/root.reducer";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
 import { CreateComponentForm } from "../../components/CreateComponentForm";
+import { COMPONENT_CREATION } from "../../../../resources/constants/strings";
 import { createComponentRoutine } from "../../../data/component/component.routine";
 import { ICreateComponentTriggerPayload } from "../../../../resources/types/component.type";
 
@@ -102,6 +103,8 @@ class CreateComponentPage extends Component<ICreateComponentPageProps, IState> {
 
     return (
       <div className="b-create-component-page">
+        <h1 className="title">{COMPONENT_CREATION}</h1>
+
         <CreateComponentForm
           onSave={this.onSave}
           componentInfo={componentInfo}

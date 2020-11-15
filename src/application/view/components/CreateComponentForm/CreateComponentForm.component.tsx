@@ -143,7 +143,6 @@ class CreateComponentForm extends Component<ICreateComponentFromProps> {
   render(): ReactNode {
     return (
       <form className="b-create-component-form">
-        <h1 className="title">{COMPONENT_CREATION}</h1>
         {this.renderComponentInfo()}
         {this.renderComponentDetailsInfo()}
 

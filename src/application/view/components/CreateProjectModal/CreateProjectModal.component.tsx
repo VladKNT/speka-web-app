@@ -5,8 +5,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Modal, ModalProps, TextField } from "@material-ui/core";
 
 import { TCallback } from "../../../../resources/types/common.type";
+import { DESCRIPTION, PROJECT_NAME } from "../../../../resources/constants/strings";
 import { ECreateProjectFields } from "../../../../resources/types/fields/createProjectFields";
-import { CREATE_PROJECT, DESCRIPTION, PROJECT_NAME } from "../../../../resources/constants/strings";
 
 import "./CreateProjectModal.style.scss";
 
@@ -43,8 +43,6 @@ class CreateProjectModal extends Component<ICreateProjectModalProps> {
     return (
       <Modal {...modalProps} onClose={onClose} className="b-create-project-modal">
         <div className="paper">
-          <label className="title">{CREATE_PROJECT}</label>
-
           <TextField
             value={name}
             className="input"

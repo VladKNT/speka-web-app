@@ -8,7 +8,7 @@ import * as componentSaga from "./component/component.saga";
 
 import { getCurrentUserRoutine } from "./user/user.routine";
 import { signInRoutine, signUpRoutine } from "./auth/auth.routine";
-import { createComponentRoutine } from "./component/component.routine";
+import { createComponentRoutine, getComponentRoutine } from "./component/component.routine";
 
 import {
   getProjectRoutine,
@@ -32,6 +32,7 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(createProjectRoutine.TRIGGER, projectSaga.createProject),
     yield takeLatest(getProjectComponentsRoutine.TRIGGER, projectSaga.getProjectComponents),
 
+    yield takeLatest(getComponentRoutine.TRIGGER, componentSaga.getComponent),
     yield takeLatest(createComponentRoutine.TRIGGER, componentSaga.createComponent),
   ]);
 }

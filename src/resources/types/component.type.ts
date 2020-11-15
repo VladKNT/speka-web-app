@@ -45,6 +45,11 @@ export interface IComponentDetails {
   futureFeatures: string;
 }
 
+export interface IComponentWithDetails {
+  component: IComponent;
+  componentDetails: IComponentDetails;
+}
+
 export interface IComponentReducer {
   loading: number;
   error: string | null;
@@ -53,7 +58,7 @@ export interface IComponentReducer {
   comparisonComponentDetails: IComponentDetails | null;
 }
 
-// Create Project
+// Create Component
 
 export interface ICreateComponentSuccessPayload {
   component: IComponent;
@@ -64,3 +69,12 @@ export interface ICreateComponentTriggerPayload extends ICreateComponentDto {
 }
 
 export interface ICreateComponentErrorPayload extends IErrorPayload {}
+
+// Get Component
+
+export interface IGetComponentTriggerPayload {
+  id: string;
+}
+
+export interface IGetComponentErrorPayload extends IErrorPayload {}
+export interface IGetComponentSuccessPayload extends IComponentWithDetails {}

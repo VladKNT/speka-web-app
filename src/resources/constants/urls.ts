@@ -12,3 +12,4 @@ export const GET_USER_PROJECT_LIST_URL = `${PROJECT_URL}/list`;
 
 export const COMPONENT_URL = "component";
 export const COMPONENT_LIST_URL = `${COMPONENT_URL}/list`;
+export const COMPONENT_WITH_DETAILS_URL = `${COMPONENT_URL}/with-details`;

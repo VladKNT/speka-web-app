@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Header } from "../components/UI/Header";
 import { ProjectPage } from "../pages/ProjectPage";
 import { DashboardPage } from "../pages/DasboardPage";
+import { ComponentPage } from "../pages/ComponentPage";
 import { IRootReducer } from "../../data/root.reducer";
 import { signOutRoutine } from "../../data/auth/auth.routine";
 import { CreateComponentPage } from "../pages/CreateComponentPage";
@@ -39,6 +40,7 @@ export const PrivateRouter: FC = () => {
       <ContentWrapper>
         <Route exact path="/" component={DashboardPage} />
         <Route exact path="/project/:id" component={ProjectPage} />
+        <Route exact path="/component/:id" component={ComponentPage} />
         <Route exact path="/project/:id/create-component" component={CreateComponentPage} />
 
         <Redirect to="/" />
