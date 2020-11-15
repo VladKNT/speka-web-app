@@ -3,6 +3,9 @@
 .b-primary-button {
   height: 35px;
   border-width: 0;
+  cursor: pointer;
+  padding: 10px 30px;
+  width: fit-content;
   border-radius: 20px;
   background: $btn-linear-gradient;
 

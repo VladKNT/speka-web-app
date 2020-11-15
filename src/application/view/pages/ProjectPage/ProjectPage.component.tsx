@@ -26,6 +26,8 @@ import {
 } from "../../../../resources/types/project.type";
 
 import "./ProjectPage.style.scss";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 
 export interface IProjectPageOwnProps {
   loading: number;
@@ -100,8 +102,15 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
     this.onEndEditing();
   }
 
-  onOpenComponent= (id: string): void => {
-    this.props.history.push(`component/${id}`);
+  onCreateComponent = () => {
+    const { match, history } = this.props;
+
+    const { id } = match.params;
+    history.push(`${id}/create-component`);
+  }
+
+  onOpenComponent = (id: string): void => {
+    this.props.history.push(`/component/${id}`);
   };
 
   onChangeField = (field: EEditProjectFields, value: string | EPhase): void => {
@@ -137,6 +146,12 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
         />
 
         <div className="project-table-container">
+          <div className="project-button-container">
+            <IconButton className="project-add-button" onClick={this.onCreateComponent}>
+              <AddIcon />
+            </IconButton>
+          </div>
+
           <ComponentTable components={components} onClick={this.onOpenComponent} />
         </div>
       </div>

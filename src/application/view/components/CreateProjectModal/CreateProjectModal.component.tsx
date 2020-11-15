@@ -1,13 +1,14 @@
 import React, { ChangeEvent, Component, ReactNode } from "react";
-import { IconButton, Input, Modal, ModalProps } from "@material-ui/core";
+
+import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
+import { IconButton, Modal, ModalProps, TextField } from "@material-ui/core";
 
 import { TCallback } from "../../../../resources/types/common.type";
 import { ECreateProjectFields } from "../../../../resources/types/fields/createProjectFields";
 import { CREATE_PROJECT, DESCRIPTION, PROJECT_NAME } from "../../../../resources/constants/strings";
 
 import "./CreateProjectModal.style.scss";
-import CloseIcon from "@material-ui/icons/Close";
-import SaveIcon from "@material-ui/icons/Save";
 
 export interface ICreateProjectModalOwnProps {
   [ECreateProjectFields.NAME]: string;
@@ -44,17 +45,21 @@ class CreateProjectModal extends Component<ICreateProjectModalProps> {
         <div className="paper">
           <label className="title">{CREATE_PROJECT}</label>
 
-          <Input
+          <TextField
             value={name}
             className="input"
+            variant="outlined"
+            label={PROJECT_NAME}
             placeholder={PROJECT_NAME}
             onChange={this.onChangeField(ECreateProjectFields.NAME)}
           />
 
-          <Input
+          <TextField
             multiline
             className="input"
+            variant="outlined"
             value={description}
+            label={DESCRIPTION}
             placeholder={DESCRIPTION}
             onChange={this.onChangeField(ECreateProjectFields.DESCRIPTION)}
           />

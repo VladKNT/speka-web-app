@@ -4,9 +4,11 @@ import { all, takeLatest } from "redux-saga/effects";
 import * as userSaga from "./user/user.saga";
 import * as authSaga from "./auth/auth.saga";
 import * as projectSaga from "./project/project.saga";
+import * as componentSaga from "./component/component.saga";
 
 import { getCurrentUserRoutine } from "./user/user.routine";
 import { signInRoutine, signUpRoutine } from "./auth/auth.routine";
+import { createComponentRoutine } from "./component/component.routine";
 
 import {
   getProjectRoutine,
@@ -29,5 +31,7 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(editProjectRoutine.TRIGGER, projectSaga.editProject),
     yield takeLatest(createProjectRoutine.TRIGGER, projectSaga.createProject),
     yield takeLatest(getProjectComponentsRoutine.TRIGGER, projectSaga.getProjectComponents),
+
+    yield takeLatest(createComponentRoutine.TRIGGER, componentSaga.createComponent),
   ]);
 }

@@ -1,0 +1,19 @@
+@import "src/resources/scss/variables/color";
+
+.b-editor {
+  margin-bottom: 20px;
+
+  .editor-label {
+    color: $grey;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .ck-editor {
+    margin-top: 5px;
+
+    .ck-content {
+      min-height: 100px;
+    }
+  }
+}

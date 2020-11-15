@@ -20,9 +20,9 @@ class PrimaryButton extends PureComponent<IPrimaryButtonProps> {
 
     return (
       <button className={classes} {...otherButtonProps}>
-        <label className={"primary-button-label"}>
+        <div className={"primary-button-label"}>
           {text.toUpperCase()}
-        </label>
+        </div>
       </button>
     );
   }

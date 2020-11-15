@@ -6,6 +6,7 @@ import { SPEKA } from "../../../../../resources/constants/strings";
 import { TCallback } from "../../../../../resources/types/common.type";
 
 import "./Header.style.scss";
+import {Link} from "react-router-dom";
 
 export interface IHeaderOwnProps {
   currentUser: IUser;
@@ -20,13 +21,15 @@ class Header extends PureComponent<IHeaderProps> {
     const { name, logoUrl } = this.props.currentUser.organization;
 
     return (
-      <span className="header-left-section">
-        {logoUrl &&
-          <img src={logoUrl} className="organization-logo" alt="organization-logo" />
-        }
+      <Link to="/" className="header-link">
+        <span className="header-left-section">
+          {logoUrl &&
+            <img src={logoUrl} className="organization-logo" alt="organization-logo" />
+          }
 
-        <label className="organization-name">{name}</label>
-      </span>
+          <h1 className="organization-name">{name}</h1>
+        </span>
+      </Link>
     );
   }
 

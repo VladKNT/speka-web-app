@@ -1,9 +1,26 @@
+import {IErrorPayload, TCallback} from "./common.type";
+
 export enum EStatus {
   PLANNING = "Planning",
   IN_PROGRESS = "In progress",
   READY_FOR_TESTING = "Ready for testing",
   COMPLETED = "Completed",
   CANCELED = "Canceled",
+}
+
+export interface ICreateComponentDetailsDto {
+  notes?: string;
+  features?: string;
+  requirements?: string;
+  futureFeatures?: string;
+}
+
+export interface ICreateComponentDto {
+  name: string;
+  projectId: string;
+  description: string;
+  estimatedTime?: number;
+  details: ICreateComponentDetailsDto;
 }
 
 export interface IComponent {
@@ -17,3 +34,33 @@ export interface IComponent {
   estimatedTime: number;
   deletedAt: string | null;
 }
+
+export interface IComponentDetails {
+  id: string;
+  notes: string;
+  version: number;
+  features: string;
+  createdAt: string;
+  requirements: string;
+  futureFeatures: string;
+}
+
+export interface IComponentReducer {
+  loading: number;
+  error: string | null;
+  component: IComponent | null;
+  componentDetails: IComponentDetails | null;
+  comparisonComponentDetails: IComponentDetails | null;
+}
+
+// Create Project
+
+export interface ICreateComponentSuccessPayload {
+  component: IComponent;
+}
+
+export interface ICreateComponentTriggerPayload extends ICreateComponentDto {
+  callback: TCallback;
+}
+
+export interface ICreateComponentErrorPayload extends IErrorPayload {}

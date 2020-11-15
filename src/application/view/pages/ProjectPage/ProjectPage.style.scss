@@ -4,4 +4,15 @@
   .project-table-container {
     padding: 20px 0;
   }
+
+  .project-button-container {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: flex-end;
+
+    .project-add-button {
+      color: $white;
+      background: $btn-linear-gradient;
+    }
+  }
 }

@@ -10,6 +10,7 @@ import { ProjectPage } from "../pages/ProjectPage";
 import { DashboardPage } from "../pages/DasboardPage";
 import { IRootReducer } from "../../data/root.reducer";
 import { signOutRoutine } from "../../data/auth/auth.routine";
+import { CreateComponentPage } from "../pages/CreateComponentPage";
 import { getCurrentUserRoutine } from "../../data/user/user.routine";
 import { ContentWrapper } from "../components/UI/Containers/ContentWrapper";
 
@@ -38,6 +39,7 @@ export const PrivateRouter: FC = () => {
       <ContentWrapper>
         <Route exact path="/" component={DashboardPage} />
         <Route exact path="/project/:id" component={ProjectPage} />
+        <Route exact path="/project/:id/create-component" component={CreateComponentPage} />
 
         <Redirect to="/" />
       </ContentWrapper>

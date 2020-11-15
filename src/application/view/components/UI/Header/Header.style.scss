@@ -9,11 +9,17 @@
   background-color: $white;
   justify-content: space-between;
 
+  .header-link {
+    text-decoration: none;
+  }
+
   .header-left-section {
     display: flex;
     align-items: center;
 
     .organization-name {
+      margin: 0;
+      color: $black;
       font-size: 20px;
       font-weight: bold;
     }

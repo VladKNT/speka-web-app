@@ -21,6 +21,8 @@ import {
   ESTIMATED_TIME,
 } from "../../../../../../resources/constants/strings";
 
+import "./ComponentTable.style.scss";
+
 export interface IComponentTableOwnProps {
   components: IComponent[];
   onClick: TStringCallback;
@@ -39,7 +41,7 @@ class ComponentTable extends Component<IComponentTableProps> {
     const { components } = this.props;
 
     return components.map((component) => (
-      <TableRow hover className="project-table-row" key={component.id} onClick={this.onOpen(component.id)}>
+      <TableRow hover className="component-table-row" key={component.id} onClick={this.onOpen(component.id)}>
         <TableCell component="th" scope="row">
           {component.name}
         </TableCell>
