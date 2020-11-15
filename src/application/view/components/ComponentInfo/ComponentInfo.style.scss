@@ -1,24 +1,22 @@
-@import "src/resources/scss/variables/color";
-
-.b-project-info {
+.b-component-info {
   flex: 1;
   display: flex;
   align-items: flex-start;
 
-  .project-info-wrapper {
+  .component-info-wrapper {
     flex: 1;
     padding-right: 30px;
     display: flex;
     flex-direction: column;
   }
 
-  .project-info {
+  .component-info {
     display: flex;
     margin-bottom: 15px;
     flex-direction: column;
   }
 
-  .project-info-title {
+  .component-info-title {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;

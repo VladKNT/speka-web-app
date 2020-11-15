@@ -1,0 +1,18 @@
+@import "src/resources/scss/variables/color";
+
+.b-edit-buttons {
+  width: 10%;
+  display: flex;
+  justify-content: flex-end;
+
+  .edit-button, .save-button {
+    color: $white;
+    background: $btn-linear-gradient;
+  }
+
+  .close-button {
+    color: $white;
+    background: $red;
+    margin-right: 10px;
+  }
+}

@@ -15,7 +15,6 @@ import {
   REQUIREMENTS,
   ESTIMATED_TIME,
   FUTURE_FEATURES,
-  COMPONENT_CREATION,
 } from "../../../../resources/constants/strings";
 
 import {

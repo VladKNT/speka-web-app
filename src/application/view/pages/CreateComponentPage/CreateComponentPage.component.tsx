@@ -59,7 +59,7 @@ class CreateComponentPage extends Component<ICreateComponentPageProps, IState> {
     }
   }
 
-  onChangeComponentInfo = (field: ECreateComponentFields, value: string | number): void => {
+  onChangeComponentInfo = (field: ECreateComponentFields, value: string): void => {
     this.setState((prevState) => ({
       componentInfo: {
         ...prevState.componentInfo,

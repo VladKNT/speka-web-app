@@ -1,4 +1,4 @@
-import {IErrorPayload, TCallback} from "./common.type";
+import { IErrorPayload, TCallback } from "./common.type";
 
 export enum EStatus {
   PLANNING = "Planning",
@@ -21,6 +21,15 @@ export interface ICreateComponentDto {
   description: string;
   estimatedTime?: number;
   details: ICreateComponentDetailsDto;
+}
+
+export interface IEditComponentDto {
+  id: string;
+  name?: string;
+  phase?: EStatus;
+  spentTime?: number;
+  description?: string;
+  estimatedTime?: number;
 }
 
 export interface IComponent {
@@ -78,3 +87,9 @@ export interface IGetComponentTriggerPayload {
 
 export interface IGetComponentErrorPayload extends IErrorPayload {}
 export interface IGetComponentSuccessPayload extends IComponentWithDetails {}
+
+// Edit Component
+
+export interface IEditComponentErrorPayload extends IErrorPayload {}
+export interface IEditComponentTriggerPayload extends IEditComponentDto {}
+export interface IEditComponentSuccessPayload extends ICreateComponentSuccessPayload {}

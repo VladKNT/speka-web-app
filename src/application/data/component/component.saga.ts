@@ -1,7 +1,9 @@
-import { put } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 
+import { IRootReducer } from "../root.reducer";
+import { IComponent } from "../../../resources/types/component.type";
 import { ComponentService } from "../../../services/api/ComponentService";
-import { createComponentRoutine, getComponentRoutine } from "./component.routine";
+import { createComponentRoutine, editComponentRoutine, getComponentRoutine } from "./component.routine";
 
 const ComponentApi = new ComponentService();
 
@@ -10,7 +12,7 @@ export function* createComponent(action: ReturnType<typeof createComponentRoutin
     yield put(createComponentRoutine.request());
 
     const { callback, ...createComponentDto } = action.payload;
-    const component = yield ComponentApi.createProject(createComponentDto);
+    const component = yield ComponentApi.createComponent(createComponentDto);
 
     yield put(createComponentRoutine.success({ component }));
     callback();
@@ -26,12 +28,33 @@ export function* getComponent(action: ReturnType<typeof getComponentRoutine.trig
     yield put(getComponentRoutine.request());
 
     const { id } = action.payload;
-    const componentWithDetails = yield ComponentApi.getProjectWithDetails(id);
+    const componentWithDetails = yield ComponentApi.getComponentWithDetails(id);
 
     yield put(getComponentRoutine.success(componentWithDetails));
   } catch (error) {
     yield put(getComponentRoutine.failure({ error: error.message }));
   } finally {
     yield put(getComponentRoutine.fulfill());
+  }
+}
+
+export function* editComponent(action: ReturnType<typeof editComponentRoutine.trigger>) {
+  try {
+    yield put(editComponentRoutine.request());
+    const selectedComponent = yield select((state: IRootReducer) => state.componentReducer.component);
+
+    yield ComponentApi.editComponent(action.payload);
+
+    const component: IComponent = {
+      ...selectedComponent,
+      ...action.payload,
+      updatedAt: String(new Date()),
+    }
+
+    yield put(editComponentRoutine.success({ component }));
+  } catch (error) {
+    yield put(editComponentRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(editComponentRoutine.fulfill());
   }
 }

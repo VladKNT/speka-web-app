@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 
 import { signOutRoutine } from "../auth/auth.routine";
 import { IComponentReducer } from "../../../resources/types/component.type";
-import { createComponentRoutine, getComponentRoutine } from "./component.routine";
+import { createComponentRoutine, editComponentRoutine, getComponentRoutine } from "./component.routine";
 
 const initialState: IComponentReducer = {
   loading: 0,
@@ -15,6 +15,7 @@ const initialState: IComponentReducer = {
 export const componentReducer = (state = initialState, action: AnyAction): IComponentReducer => {
   switch (action.type) {
     case getComponentRoutine.TRIGGER:
+    case editComponentRoutine.TRIGGER:
     case createComponentRoutine.TRIGGER: {
       return {
         ...state,
@@ -32,7 +33,15 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
       };
     }
 
+    case editComponentRoutine.SUCCESS: {
+      return {
+        ...state,
+        component: action.payload.component,
+      };
+    }
+
     case getComponentRoutine.FAILURE:
+    case editComponentRoutine.FAILURE:
     case createComponentRoutine.FAILURE: {
       return {
         ...state,
@@ -41,6 +50,7 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     }
 
     case getComponentRoutine.FULFILL:
+    case editComponentRoutine.FULFILL:
     case createComponentRoutine.FULFILL: {
       return {
         ...state,

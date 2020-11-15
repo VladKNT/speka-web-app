@@ -5,6 +5,10 @@ import {
   IGetComponentSuccessPayload,
   IGetComponentTriggerPayload,
 
+  IEditComponentErrorPayload,
+  IEditComponentSuccessPayload,
+  IEditComponentTriggerPayload,
+
   ICreateComponentErrorPayload,
   ICreateComponentSuccessPayload,
   ICreateComponentTriggerPayload,
@@ -20,4 +24,10 @@ export const getComponentRoutine = createRoutine("GET_COMPONENT", {
   failure: (payload: IGetComponentErrorPayload) => (payload),
   success: (payload: IGetComponentSuccessPayload) => (payload),
   trigger: (payload: IGetComponentTriggerPayload) => (payload),
+});
+
+export const editComponentRoutine = createRoutine("EDIT_COMPONENT", {
+  failure: (payload: IEditComponentErrorPayload) => (payload),
+  success: (payload: IEditComponentSuccessPayload) => (payload),
+  trigger: (payload: IEditComponentTriggerPayload) => (payload),
 });

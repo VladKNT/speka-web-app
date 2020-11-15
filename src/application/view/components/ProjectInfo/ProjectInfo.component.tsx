@@ -1,11 +1,8 @@
 import React, { ChangeEvent, Component, ReactNode } from "react";
 
-import Select from "@material-ui/core/Select";
-import SaveIcon from "@material-ui/icons/Save";
-import EditIcon from "@material-ui/icons/Edit";
-import CloseIcon from "@material-ui/icons/Close";
-import { IconButton, Input } from "@material-ui/core";
+import { Input, Select } from "@material-ui/core";
 
+import { EditButtons } from "../UI/Buttons/EditButtons";
 import { TCallback } from "../../../../resources/types/common.type";
 import { EPhase, IProject } from "../../../../resources/types/project.type";
 import { EEditProjectFields } from "../../../../resources/types/fields/editProjectFields";
@@ -97,33 +94,8 @@ class ProjectInfo extends Component<IProjectInfoProps> {
     return <div>{project.phase}</div>;
   }
 
-  renderButtons(): ReactNode {
-    const { isEditing, onEndEditing, onSaveEditing, onStartEditing } = this.props;
-
-    if (!isEditing) {
-      return (
-        <div className="project-buttons-container">
-          <IconButton className="project-edit-button" onClick={onStartEditing}>
-            <EditIcon />
-          </IconButton>
-        </div>
-      );
-    }
-
-    return (
-      <div className="project-buttons-container">
-        <IconButton className="project-close-button" onClick={onEndEditing}>
-          <CloseIcon />
-        </IconButton>
-        <IconButton className="project-save-button" onClick={onSaveEditing}>
-          <SaveIcon />
-        </IconButton>
-      </div>
-    );
-  }
-
   render(): ReactNode {
-    const { project } = this.props;
+    const { project, isEditing, onEndEditing, onSaveEditing, onStartEditing } = this.props;
 
     return (
       <div className="b-project-info">
@@ -156,7 +128,12 @@ class ProjectInfo extends Component<IProjectInfoProps> {
           </div>
         </div>
 
-        {this.renderButtons()}
+        <EditButtons
+          onEnd={onEndEditing}
+          isEditing={isEditing}
+          onSave={onSaveEditing}
+          onStart={onStartEditing}
+        />
       </div>
     );
   }

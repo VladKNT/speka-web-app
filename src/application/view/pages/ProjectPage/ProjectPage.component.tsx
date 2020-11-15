@@ -51,17 +51,19 @@ interface IState {
   };
 }
 
+const initialEditInfo = {
+  [EEditProjectFields.NAME]: "",
+  [EEditProjectFields.DESCRIPTION]: "",
+  [EEditProjectFields.PHASE]: EPhase.INITIAL,
+};
+
 class ProjectPage extends Component<IProjectPageProps, IState> {
   constructor(props: IProjectPageProps) {
     super(props);
 
     this.state = {
       isEditing: false,
-      editInfo: {
-        [EEditProjectFields.NAME]: "",
-        [EEditProjectFields.DESCRIPTION]: "",
-        [EEditProjectFields.PHASE]: EPhase.INITIAL,
-      },
+      editInfo: initialEditInfo,
     }
   }
 
@@ -89,7 +91,7 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
   }
 
   onEndEditing = (): void => {
-    this.setState({ isEditing: false });
+    this.setState({ isEditing: false, editInfo: initialEditInfo });
   }
 
   onSaveEditing = (): void => {
