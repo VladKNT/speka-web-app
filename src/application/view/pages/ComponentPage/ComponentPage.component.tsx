@@ -188,11 +188,30 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
 
     this.setState({ compareVersion: version });
 
-    console.info({ version });
     if (version) {
       onGetComponentDetailsByVersion({ id, version });
     } else {
       onClearComparisonComponentDetails();
+    }
+  }
+
+  getDetailsFields = () => {
+    const { componentDetails } = this.props;
+    const { editComponentDetails, componentDetailsEditing } = this.state;
+    const { notes, features, futureFeatures, requirements } = componentDetails!;
+
+    const {
+      notes: notesEditing,
+      features: featuresEditing,
+      requirements: requirementsEditing,
+      futureFeatures: futureFeaturesEditing,
+    } = componentDetailsEditing;
+
+    return {
+      notes: editComponentDetails ? notesEditing : notes,
+      features: editComponentDetails ? featuresEditing : features,
+      requirements: editComponentDetails ? requirementsEditing : requirements,
+      futureFeatures: editComponentDetails ? futureFeaturesEditing : futureFeatures,
     }
   }
 
@@ -204,7 +223,6 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
       compareVersion,
       componentEditing,
       editComponentDetails,
-      componentDetailsEditing,
     } = this.state;
 
     if (!component || !componentDetails) {
@@ -226,11 +244,11 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
         <ComponentDetailsInfo
           compareVersion={compareVersion}
           isEditing={editComponentDetails}
-          componentDetails={componentDetails}
+          currentVersion={componentDetails.version}
           onSaveEditing={this.onSaveComponentDetailsInfo}
           onChange={this.onChangeComponentDetailsEditing}
           onEndEditing={this.onEndComponentDetailsEditing}
-          componentDetailsEditing={componentDetailsEditing}
+          componentDetailsFields={this.getDetailsFields()}
           onChangeCompareVersion={this.onChangeCompareVersion}
           onStartEditing={this.onStartComponentDetailsEditing}
           comparisonComponentDetails={comparisonComponentDetails}
