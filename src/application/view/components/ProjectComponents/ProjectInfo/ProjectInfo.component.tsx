@@ -119,12 +119,12 @@ class ProjectInfo extends Component<IProjectInfoProps> {
         <div className="project-info-wrapper">
           <div className="project-info">
             <label className="project-info-title">{CREATION_DATE}</label>
-            <div>{project.createdAt}</div>
+            <div>{new Date(project.createdAt).toLocaleString()}</div>
           </div>
 
           <div className="project-info">
             <label className="project-info-title">{LAST_UPDATE}</label>
-            <div>{project.updatedAt}</div>
+            <div>{new Date(project.updatedAt!).toLocaleString()}</div>
           </div>
         </div>
 

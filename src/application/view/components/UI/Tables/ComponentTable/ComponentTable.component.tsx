@@ -49,8 +49,8 @@ class ComponentTable extends Component<IComponentTableProps> {
         <TableCell>{component.phase}</TableCell>
         <TableCell>{component.spentTime}</TableCell>
         <TableCell>{component.estimatedTime}</TableCell>
-        <TableCell>{component.createdAt}</TableCell>
-        <TableCell>{component.updatedAt}</TableCell>
+        <TableCell>{new Date(component.createdAt).toLocaleString()}</TableCell>
+        <TableCell>{new Date(component.updatedAt!).toLocaleString()}</TableCell>
       </TableRow>
     ));
   }

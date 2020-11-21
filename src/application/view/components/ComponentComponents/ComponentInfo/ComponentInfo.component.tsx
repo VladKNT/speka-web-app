@@ -171,12 +171,13 @@ class ComponentInfo extends Component<IComponentInfoProps> {
         <div className="component-info-wrapper">
           <div className="component-info">
             <label className="component-info-title">{CREATION_DATE}</label>
-            <div>{component.createdAt}</div>
+            <div>{new Date(component.createdAt).toLocaleString()}</div>
           </div>
+
 
           <div className="component-info">
             <label className="component-info-title">{LAST_UPDATE}</label>
-            <div>{component.updatedAt}</div>
+            <div>{new Date(component.updatedAt).toLocaleString()}</div>
           </div>
         </div>
 

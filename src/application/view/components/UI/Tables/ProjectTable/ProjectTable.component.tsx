@@ -46,8 +46,8 @@ class ProjectTable extends Component<IProjectTableProps> {
           </TableCell>
           <TableCell>{project.description}</TableCell>
           <TableCell>{project.phase}</TableCell>
-          <TableCell>{project.createdAt}</TableCell>
-          <TableCell>{project.updatedAt}</TableCell>
+          <TableCell>{new Date(project.createdAt).toLocaleString()}</TableCell>
+          <TableCell>{new Date(project.updatedAt!).toLocaleString()}</TableCell>
         </TableRow>
       )
     });
