@@ -1,0 +1,14 @@
+.b-component-details-info {
+  display: flex;
+  flex-direction: column;
+
+  .editing-fields {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

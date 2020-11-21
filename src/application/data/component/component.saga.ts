@@ -3,7 +3,13 @@ import { put, select } from "redux-saga/effects";
 import { IRootReducer } from "../root.reducer";
 import { IComponent } from "../../../resources/types/component.type";
 import { ComponentService } from "../../../services/api/ComponentService";
-import { createComponentRoutine, editComponentRoutine, getComponentRoutine } from "./component.routine";
+
+import {
+  getComponentRoutine,
+  editComponentRoutine,
+  createComponentRoutine,
+  createComponentDetailsRoutine,
+} from "./component.routine";
 
 const ComponentApi = new ComponentService();
 
@@ -56,5 +62,20 @@ export function* editComponent(action: ReturnType<typeof editComponentRoutine.tr
     yield put(editComponentRoutine.failure({ error: error.message }));
   } finally {
     yield put(editComponentRoutine.fulfill());
+  }
+}
+
+export function* createComponentDetails(action: ReturnType<typeof createComponentDetailsRoutine.trigger>) {
+  try {
+    yield put(createComponentDetailsRoutine.request());
+
+    const { id, ...createComponentDetailsDto } = action.payload;
+    const componentDetails = yield ComponentApi.createComponentDetails(id, createComponentDetailsDto);
+
+    yield put(createComponentDetailsRoutine.success({ componentDetails }));
+  } catch (error) {
+    yield put(createComponentDetailsRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(createComponentDetailsRoutine.fulfill());
   }
 }

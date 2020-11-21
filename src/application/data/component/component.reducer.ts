@@ -2,7 +2,13 @@ import { AnyAction } from "redux";
 
 import { signOutRoutine } from "../auth/auth.routine";
 import { IComponentReducer } from "../../../resources/types/component.type";
-import { createComponentRoutine, editComponentRoutine, getComponentRoutine } from "./component.routine";
+
+import {
+  getComponentRoutine,
+  editComponentRoutine,
+  createComponentRoutine,
+  createComponentDetailsRoutine
+} from "./component.routine";
 
 const initialState: IComponentReducer = {
   loading: 0,
@@ -16,7 +22,8 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
   switch (action.type) {
     case getComponentRoutine.TRIGGER:
     case editComponentRoutine.TRIGGER:
-    case createComponentRoutine.TRIGGER: {
+    case createComponentRoutine.TRIGGER:
+    case createComponentDetailsRoutine.TRIGGER: {
       return {
         ...state,
         loading: state.loading + 1,
@@ -40,9 +47,17 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
       };
     }
 
+    case createComponentDetailsRoutine.SUCCESS: {
+      return {
+        ...state,
+        componentDetails: action.payload.componentDetails,
+      };
+    }
+
     case getComponentRoutine.FAILURE:
     case editComponentRoutine.FAILURE:
-    case createComponentRoutine.FAILURE: {
+    case createComponentRoutine.FAILURE:
+    case createComponentDetailsRoutine.FAILURE: {
       return {
         ...state,
         error: action.payload.error,
@@ -51,7 +66,8 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
 
     case getComponentRoutine.FULFILL:
     case editComponentRoutine.FULFILL:
-    case createComponentRoutine.FULFILL: {
+    case createComponentRoutine.FULFILL:
+    case createComponentDetailsRoutine.FULFILL: {
       return {
         ...state,
         loading: state.loading - 1,

@@ -93,3 +93,15 @@ export interface IGetComponentSuccessPayload extends IComponentWithDetails {}
 export interface IEditComponentErrorPayload extends IErrorPayload {}
 export interface IEditComponentTriggerPayload extends IEditComponentDto {}
 export interface IEditComponentSuccessPayload extends ICreateComponentSuccessPayload {}
+
+// Create Component Details
+
+export interface ICreateComponentDetailsErrorPayload extends IErrorPayload {}
+
+export interface ICreateComponentDetailsTriggerPayload extends ICreateComponentDetailsDto {
+  id: string;
+}
+
+export interface ICreateComponentDetailsSuccessPayload {
+  componentDetails: IComponentDetails;
+}

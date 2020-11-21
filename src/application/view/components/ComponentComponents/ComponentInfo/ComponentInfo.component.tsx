@@ -2,6 +2,7 @@ import React, { ChangeEvent, Component, ReactNode } from "react";
 
 import { Input, Select } from "@material-ui/core";
 
+import { EditButtons } from "../../UI/Buttons/EditButtons";
 import { TCallback } from "../../../../../resources/types/common.type";
 import { EStatus, IComponent } from "../../../../../resources/types/component.type";
 import { EEditComponentFields, IEditComponentFields } from "../../../../../resources/types/fields/editComponentFields";
@@ -17,7 +18,6 @@ import {
 } from "../../../../../resources/constants/strings";
 
 import "./ComponentInfo.style.scss";
-import {EditButtons} from "../../UI/Buttons/EditButtons";
 
 export interface IComponentInfoOwnProps {
   isEditing: boolean;

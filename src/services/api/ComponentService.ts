@@ -1,11 +1,13 @@
 import { ApiService } from "./ApiService";
-import { COMPONENT_URL, COMPONENT_WITH_DETAILS_URL } from "../../resources/constants/urls";
+import { COMPONENT_DETAILS_URL, COMPONENT_URL, COMPONENT_WITH_DETAILS_URL } from "../../resources/constants/urls";
 
 import {
   IComponent,
+  IComponentDetails,
   IEditComponentDto,
   ICreateComponentDto,
-  IComponentWithDetails
+  IComponentWithDetails,
+  ICreateComponentDetailsDto,
 } from "../../resources/types/component.type";
 
 export class ComponentService extends ApiService {
@@ -28,5 +30,9 @@ export class ComponentService extends ApiService {
   editComponent(editComponentDto: IEditComponentDto): Promise<void> {
     const { id, ...editedData } = editComponentDto;
     return this.axiosInstance.patch(`${COMPONENT_URL}/${id}`, editedData);
+  }
+
+  createComponentDetails(id: string, createComponentDetailsDto: ICreateComponentDetailsDto): Promise<IComponentDetails> {
+    return this.axiosInstance.post(`${COMPONENT_URL}/${id}/${COMPONENT_DETAILS_URL}`, createComponentDetailsDto);
   }
 }

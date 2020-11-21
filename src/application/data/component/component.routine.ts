@@ -12,6 +12,9 @@ import {
   ICreateComponentErrorPayload,
   ICreateComponentSuccessPayload,
   ICreateComponentTriggerPayload,
+  ICreateComponentDetailsErrorPayload,
+  ICreateComponentDetailsSuccessPayload,
+  ICreateComponentDetailsTriggerPayload,
 } from "../../../resources/types/component.type";
 
 export const createComponentRoutine = createRoutine("CREATE_COMPONENT", {
@@ -30,4 +33,10 @@ export const editComponentRoutine = createRoutine("EDIT_COMPONENT", {
   failure: (payload: IEditComponentErrorPayload) => (payload),
   success: (payload: IEditComponentSuccessPayload) => (payload),
   trigger: (payload: IEditComponentTriggerPayload) => (payload),
+});
+
+export const createComponentDetailsRoutine = createRoutine("CREATE_COMPONENTS_DETAILS", {
+  failure: (payload: ICreateComponentDetailsErrorPayload) => (payload),
+  success: (payload: ICreateComponentDetailsSuccessPayload) => (payload),
+  trigger: (payload: ICreateComponentDetailsTriggerPayload) => (payload),
 });

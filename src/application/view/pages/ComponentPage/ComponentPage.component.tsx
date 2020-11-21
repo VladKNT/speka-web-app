@@ -7,22 +7,29 @@ import { RouteComponentProps } from "react-router-dom";
 import { IRootReducer } from "../../../data/root.reducer";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
 import { ComponentInfo } from "../../components/ComponentComponents/ComponentInfo";
-import { editComponentRoutine, getComponentRoutine } from "../../../data/component/component.routine";
+import { ComponentDetailsInfo } from "../../components/ComponentComponents/ComponentDetailsInfo";
 import { initialEditComponent, initialEditComponentDetails } from "../../../../resources/constants/component";
+
+import {
+  getComponentRoutine,
+  editComponentRoutine,
+  createComponentDetailsRoutine,
+} from "../../../data/component/component.routine";
 
 import {
   IComponent,
   IComponentDetails,
   IEditComponentDto,
+  IGetComponentTriggerPayload,
   IEditComponentTriggerPayload,
-  IGetComponentTriggerPayload
+  ICreateComponentDetailsTriggerPayload,
 } from "../../../../resources/types/component.type";
 
 import {
-  EEditComponentDetailsFields,
   EEditComponentFields,
-  IEditComponentDetailsFields,
   IEditComponentFields,
+  IEditComponentDetailsFields,
+  EEditComponentDetailsFields,
 } from "../../../../resources/types/fields/editComponentFields";
 
 export interface IComponentPageOwnProps {
@@ -32,6 +39,7 @@ export interface IComponentPageOwnProps {
   comparisonComponentDetails: IComponentDetails | null;
   onGetComponent: (payload: IGetComponentTriggerPayload) => void;
   onEditComponent: (payload: IEditComponentTriggerPayload) =>  void;
+  onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => void;
 }
 
 export interface IComponentPageInjectedProps extends RouteComponentProps<IIdRouteParam> {}
@@ -132,7 +140,7 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
 
     if (componentDetails) {
       this.setState({
-        editComponent: true,
+        editComponentDetails: true,
         componentDetailsEditing: {
           [EEditComponentDetailsFields.NOTES]: componentDetails.notes,
           [EEditComponentDetailsFields.FEATURES]: componentDetails.features,
@@ -148,17 +156,19 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
   }
 
   onSaveComponentDetailsInfo = (): void => {
-    const { componentEditing } = this.state;
-    const { match } = this.props;
+    const { componentDetailsEditing } = this.state;
+    const { match, onCreateComponentDetails } = this.props;
 
-    console.info(match, componentEditing);
-    this.onEndComponentEditing();
+    const { id } = match.params;
+
+    onCreateComponentDetails({ id, ...componentDetailsEditing });
+    this.onEndComponentDetailsEditing();
   }
 
 
   render(): ReactNode {
     const { component, componentDetails } = this.props;
-    const { editComponent, componentEditing } = this.state;
+    const { editComponent, editComponentDetails, componentEditing, componentDetailsEditing } = this.state;
 
     if (!component || !componentDetails) {
       return null;
@@ -174,6 +184,16 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
           onEndEditing={this.onEndComponentEditing}
           onSaveEditing={this.onSaveComponentEditing}
           onStartEditing={this.onStartComponentEditing}
+        />
+
+        <ComponentDetailsInfo
+          isEditing={editComponentDetails}
+          componentDetails={componentDetails}
+          onSaveEditing={this.onSaveComponentDetailsInfo}
+          onChange={this.onChangeComponentDetailsEditing}
+          onEndEditing={this.onEndComponentDetailsEditing}
+          componentDetailsEditing={componentDetailsEditing}
+          onStartEditing={this.onStartComponentDetailsEditing}
         />
       </div>
     )
@@ -195,6 +215,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     onGetComponent: (payload: IGetComponentTriggerPayload) => dispatch(getComponentRoutine.trigger(payload)),
     onEditComponent: (payload: IEditComponentTriggerPayload) => dispatch(editComponentRoutine.trigger(payload)),
+    onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => dispatch(createComponentDetailsRoutine.trigger(payload)),
   }
 }
 
