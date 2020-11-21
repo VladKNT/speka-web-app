@@ -9,7 +9,9 @@ import {
   getProjectsRoutine,
   editProjectRoutine,
   createProjectRoutine,
-  getProjectComponentsRoutine
+  getProjectComponentsRoutine,
+  getProjectTeamMembersRoutine,
+  assignProjectTeamMemberRoutine,
 } from "./project.routine";
 
 const ProjectApi = new ProjectService();
@@ -80,5 +82,36 @@ export function* editProject(action: ReturnType<typeof editProjectRoutine.trigge
     yield put(editProjectRoutine.failure({ error: error.message }));
   } finally {
     yield put(editProjectRoutine.fulfill());
+  }
+}
+
+export function* getProjectTeamMembers(action: ReturnType<typeof getProjectTeamMembersRoutine.trigger>) {
+  try {
+    yield put(getProjectTeamMembersRoutine.request());
+
+    const { id } = action.payload;
+    const teamMembers = yield ProjectApi.getTeamMembers(id);
+
+    yield put(getProjectTeamMembersRoutine.success({ teamMembers }));
+  } catch (error) {
+    yield put(getProjectTeamMembersRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(getProjectTeamMembersRoutine.fulfill());
+  }
+}
+
+export function* assignProjectTeamMembers(action: ReturnType<typeof assignProjectTeamMemberRoutine.trigger>) {
+  try {
+    yield put(assignProjectTeamMemberRoutine.request());
+
+    const { id, teamMemberId } = action.payload;
+    yield ProjectApi.assignTeamMember(id, teamMemberId);
+
+    yield put(assignProjectTeamMemberRoutine.success());
+    yield put(getProjectTeamMembersRoutine.trigger({ id }));
+  } catch (error) {
+    yield put(assignProjectTeamMemberRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(assignProjectTeamMemberRoutine.fulfill());
   }
 }

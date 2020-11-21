@@ -13,6 +13,13 @@ import {
   ICreateProjectSuccessPayload,
   ICreateProjectTriggerPayload,
 
+  IGetTeamMembersErrorPayload,
+  IGetTeamMembersSuccessPayload,
+  IGetTeamMembersTriggerPayload,
+
+  IAssignTeamMemberErrorPayload,
+  IAssignTeamMemberTriggerPayload,
+
   IGetUserProjectsErrorPayload,
   IGetUserProjectsSuccessPayload,
 
@@ -48,4 +55,15 @@ export const editProjectRoutine = createRoutine("EDIT_PROJECT", {
   failure: (payload: IEditProjectErrorPayload) => (payload),
   success: (payload: IEditProjectSuccessPayload) => (payload),
   trigger: (payload: IEditProjectTriggerPayload) => (payload),
+});
+
+export const getProjectTeamMembersRoutine = createRoutine("GET_PROJECT_TEAM_MEMBERS", {
+  failure: (payload: IGetTeamMembersErrorPayload) => (payload),
+  success: (payload: IGetTeamMembersSuccessPayload) => (payload),
+  trigger: (payload: IGetTeamMembersTriggerPayload) => (payload),
+});
+
+export const assignProjectTeamMemberRoutine = createRoutine("ASSIGN_PROJECT_TEAM_MEMBER", {
+  failure: (payload: IAssignTeamMemberErrorPayload) => (payload),
+  trigger: (payload: IAssignTeamMemberTriggerPayload) => (payload),
 });

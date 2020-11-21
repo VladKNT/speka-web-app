@@ -14,3 +14,7 @@ export const COMPONENT_URL = "component";
 export const COMPONENT_DETAILS_URL = "component-details";
 export const COMPONENT_LIST_URL = `${COMPONENT_URL}/list`;
 export const COMPONENT_WITH_DETAILS_URL = `${COMPONENT_URL}/with-details`;
+
+export const TEAM_MEMBER_URL = "team-member";
+export const TEAM_MEMBER_LIST_URL = `${TEAM_MEMBER_URL}/list`;
+export const TEAM_MEMBER_ASSIGN_URL = `${TEAM_MEMBER_URL}/assign`;

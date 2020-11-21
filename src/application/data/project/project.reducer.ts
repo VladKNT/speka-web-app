@@ -9,6 +9,8 @@ import {
   editProjectRoutine,
   createProjectRoutine,
   getProjectComponentsRoutine,
+  getProjectTeamMembersRoutine,
+  assignProjectTeamMemberRoutine,
 } from "./project.routine";
 
 const initialState: IProjectReducer = {
@@ -17,6 +19,7 @@ const initialState: IProjectReducer = {
   projects: [],
   selectedProject: null,
   selectedProjectComponents: [],
+  selectedProjectTeamMembers: [],
 };
 
 export const projectReducer = (state = initialState, action: AnyAction): IProjectReducer => {
@@ -25,7 +28,9 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
     case getProjectsRoutine.REQUEST:
     case editProjectRoutine.REQUEST:
     case createProjectRoutine.REQUEST:
-    case getProjectComponentsRoutine.REQUEST: {
+    case getProjectComponentsRoutine.REQUEST:
+    case getProjectTeamMembersRoutine.REQUEST:
+    case assignProjectTeamMemberRoutine.REQUEST: {
       return {
         ...state,
         loading: state.loading + 1,
@@ -61,11 +66,20 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
       };
     }
 
+    case getProjectTeamMembersRoutine.SUCCESS: {
+      return {
+        ...state,
+        selectedProjectTeamMembers: action.payload.teamMembers,
+      };
+    }
+
     case getProjectRoutine.FAILURE:
     case getProjectsRoutine.FAILURE:
     case editProjectRoutine.FAILURE:
     case createProjectRoutine.FAILURE:
-    case getProjectComponentsRoutine.FAILURE: {
+    case getProjectComponentsRoutine.FAILURE:
+    case getProjectTeamMembersRoutine.FAILURE:
+    case assignProjectTeamMemberRoutine.FAILURE: {
       return {
         ...state,
         error: action.payload.message,
@@ -76,7 +90,9 @@ export const projectReducer = (state = initialState, action: AnyAction): IProjec
     case getProjectsRoutine.FULFILL:
     case editProjectRoutine.FULFILL:
     case createProjectRoutine.FULFILL:
-    case getProjectComponentsRoutine.FULFILL: {
+    case getProjectComponentsRoutine.FULFILL:
+    case getProjectTeamMembersRoutine.FULFILL:
+    case assignProjectTeamMemberRoutine.FULFILL: {
       return {
         ...state,
         loading: state.loading - 1,

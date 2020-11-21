@@ -1,5 +1,6 @@
 import { IErrorPayload } from "./common.type";
 import { IComponent } from "./component.type";
+import {IUser} from "./user.type";
 
 export enum EPhase {
   INITIAL = "Initial",
@@ -36,6 +37,7 @@ export interface IProjectReducer {
   error: string | null;
   projects: IProject[];
   selectedProject: IProject | null;
+  selectedProjectTeamMembers: IUser[];
   selectedProjectComponents: IComponent[];
 }
 
@@ -81,3 +83,23 @@ export interface IGetProjectComponentsSuccessPayload {
 }
 
 export interface IGetProjectComponentsErrorPayload extends IErrorPayload {}
+
+// Get team members
+
+export interface IGetTeamMembersErrorPayload extends IErrorPayload {}
+
+export interface IGetTeamMembersSuccessPayload {
+  teamMembers: IUser[];
+}
+export interface IGetTeamMembersTriggerPayload {
+  id: string;
+}
+
+// Assign team member
+
+export interface IAssignTeamMemberErrorPayload extends IErrorPayload {}
+
+export interface IAssignTeamMemberTriggerPayload {
+  id: string;
+  teamMemberId: string;
+}

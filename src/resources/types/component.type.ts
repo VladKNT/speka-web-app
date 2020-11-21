@@ -106,7 +106,6 @@ export interface ICreateComponentDetailsSuccessPayload {
   componentDetails: IComponentDetails;
 }
 
-
 // Get Component Details By Version
 
 export interface IGetComponentDetailsByVersionErrorPayload extends IErrorPayload {}
