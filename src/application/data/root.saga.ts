@@ -5,9 +5,11 @@ import * as userSaga from "./user/user.saga";
 import * as authSaga from "./auth/auth.saga";
 import * as projectSaga from "./project/project.saga";
 import * as componentSaga from "./component/component.saga";
+import * as organizationSaga from "./organization/organization.saga";
 
 import { getCurrentUserRoutine } from "./user/user.routine";
 import { signInRoutine, signUpRoutine } from "./auth/auth.routine";
+import { getStaffRoutine } from "./organization/organization.routine";
 
 import {
   getProjectRoutine,
@@ -45,5 +47,7 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(createComponentRoutine.TRIGGER, componentSaga.createComponent),
     yield takeLatest(createComponentDetailsRoutine.TRIGGER, componentSaga.createComponentDetails),
     yield takeLatest(getComponentDetailsByVersionRoutine.TRIGGER, componentSaga.getComponentDetailsByVersion),
+
+    yield takeLatest(getStaffRoutine.TRIGGER, organizationSaga.getStaff),
   ]);
 }
