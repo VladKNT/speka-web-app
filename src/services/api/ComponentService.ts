@@ -1,5 +1,13 @@
 import { ApiService } from "./ApiService";
-import { COMPONENT_DETAILS_URL, COMPONENT_URL, COMPONENT_WITH_DETAILS_URL } from "../../resources/constants/urls";
+import { IUser } from "../../resources/types/user.type";
+
+import {
+  COMPONENT_URL,
+  TEAM_MEMBER_LIST_URL,
+  COMPONENT_DETAILS_URL,
+  TEAM_MEMBER_ASSIGN_URL,
+  COMPONENT_WITH_DETAILS_URL,
+} from "../../resources/constants/urls";
 
 import {
   IComponent,
@@ -40,5 +48,13 @@ export class ComponentService extends ApiService {
     return this.axiosInstance.get(`${COMPONENT_URL}/${id}/${COMPONENT_DETAILS_URL}`, {
       params: { version },
     });
+  }
+
+  getAssignees(id: string): Promise<IUser> {
+    return this.axiosInstance.get(`${COMPONENT_URL}/${id}/${TEAM_MEMBER_LIST_URL}`);
+  }
+
+  assignComponentMember(id: string, teamMemberId: string): Promise<void> {
+    return this.axiosInstance.patch(`${COMPONENT_URL}/${id}/${TEAM_MEMBER_ASSIGN_URL}`, { teamMemberId });
   }
 }

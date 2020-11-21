@@ -100,7 +100,7 @@ export function* getProjectTeamMembers(action: ReturnType<typeof getProjectTeamM
   }
 }
 
-export function* assignProjectTeamMembers(action: ReturnType<typeof assignProjectTeamMemberRoutine.trigger>) {
+export function* assignProjectTeamMember(action: ReturnType<typeof assignProjectTeamMemberRoutine.trigger>) {
   try {
     yield put(assignProjectTeamMemberRoutine.request());
 

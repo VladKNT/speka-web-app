@@ -8,6 +8,8 @@ import {
   getComponentRoutine,
   editComponentRoutine,
   createComponentRoutine,
+  assignComponentMemberRoutine,
+  getComponentAssigneesRoutine,
   createComponentDetailsRoutine,
   getComponentDetailsByVersionRoutine,
 } from "./component.routine";
@@ -93,5 +95,36 @@ export function* getComponentDetailsByVersion(action: ReturnType<typeof getCompo
     yield put(getComponentDetailsByVersionRoutine.failure({ error: error.message }));
   } finally {
     yield put(getComponentDetailsByVersionRoutine.fulfill());
+  }
+}
+
+export function* getComponentAssignees(action: ReturnType<typeof getComponentAssigneesRoutine.trigger>) {
+  try {
+    yield put(getComponentAssigneesRoutine.request());
+
+    const { id } = action.payload;
+    const assignees = yield ComponentApi.getAssignees(id);
+
+    yield put(getComponentAssigneesRoutine.success({ assignees }));
+  } catch (error) {
+    yield put(getComponentAssigneesRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(getComponentAssigneesRoutine.fulfill());
+  }
+}
+
+export function* assignComponentTeamMember(action: ReturnType<typeof assignComponentMemberRoutine.trigger>) {
+  try {
+    yield put(assignComponentMemberRoutine.request());
+
+    const { id, teamMemberId } = action.payload;
+    yield ComponentApi.assignComponentMember(id, teamMemberId);
+
+    yield put(assignComponentMemberRoutine.success());
+    yield put(getComponentAssigneesRoutine.trigger({id}));
+  } catch (error) {
+    yield put(assignComponentMemberRoutine.failure({error: error.message}));
+  } finally {
+    yield put(assignComponentMemberRoutine.fulfill());
   }
 }

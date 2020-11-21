@@ -1,3 +1,4 @@
+import { IUser } from "./user.type";
 import { IErrorPayload, TCallback } from "./common.type";
 
 export enum EStatus {
@@ -62,6 +63,7 @@ export interface IComponentWithDetails {
 export interface IComponentReducer {
   loading: number;
   error: string | null;
+  componentAssignees: IUser[];
   component: IComponent | null;
   componentDetails: IComponentDetails | null;
   comparisonComponentDetails: IComponentDetails | null;
@@ -117,4 +119,24 @@ export interface IGetComponentDetailsByVersionSuccessPayload {
 export interface IGetComponentDetailsByVersionTriggerPayload {
   id: string;
   version: number;
+}
+
+// Get team members
+
+export interface IGetAssigneesErrorPayload extends IErrorPayload {}
+
+export interface IGetAssigneesSuccessPayload {
+  assignees: IUser[];
+}
+export interface IGetAssigneesTriggerPayload {
+  id: string;
+}
+
+// Assign team member
+
+export interface IAssignComponentMemberErrorPayload extends IErrorPayload {}
+
+export interface IAssignComponentMemberTriggerPayload {
+  id: string;
+  teamMemberId: string;
 }

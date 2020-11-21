@@ -5,16 +5,25 @@ import {
   IGetComponentSuccessPayload,
   IGetComponentTriggerPayload,
 
+  IGetAssigneesErrorPayload,
+  IGetAssigneesSuccessPayload,
+  IGetAssigneesTriggerPayload,
+
   IEditComponentErrorPayload,
   IEditComponentSuccessPayload,
   IEditComponentTriggerPayload,
 
+  IAssignComponentMemberErrorPayload,
+  IAssignComponentMemberTriggerPayload,
+
   ICreateComponentErrorPayload,
   ICreateComponentSuccessPayload,
   ICreateComponentTriggerPayload,
+
   ICreateComponentDetailsErrorPayload,
   ICreateComponentDetailsSuccessPayload,
   ICreateComponentDetailsTriggerPayload,
+
   IGetComponentDetailsByVersionErrorPayload,
   IGetComponentDetailsByVersionSuccessPayload,
   IGetComponentDetailsByVersionTriggerPayload,
@@ -48,6 +57,17 @@ export const getComponentDetailsByVersionRoutine = createRoutine("GET_COMPONENT_
   failure: (payload: IGetComponentDetailsByVersionErrorPayload) => (payload),
   success: (payload: IGetComponentDetailsByVersionSuccessPayload) => (payload),
   trigger: (payload: IGetComponentDetailsByVersionTriggerPayload) => (payload),
+});
+
+export const getComponentAssigneesRoutine = createRoutine("GET_COMPONENT_ASSIGNEES", {
+  failure: (payload: IGetAssigneesErrorPayload) => (payload),
+  success: (payload: IGetAssigneesSuccessPayload) => (payload),
+  trigger: (payload: IGetAssigneesTriggerPayload) => (payload),
+});
+
+export const assignComponentMemberRoutine = createRoutine("ASSIGN_COMPONENT_MEMBER", {
+  failure: (payload: IAssignComponentMemberErrorPayload) => (payload),
+  trigger: (payload: IAssignComponentMemberTriggerPayload) => (payload),
 });
 
 export const clearComponentWithDetails = createRoutine("CLEAR_COMPONENT_WITH_DETAILS");

@@ -17,12 +17,16 @@ import {
   editProjectRoutine,
   createProjectRoutine,
   getProjectComponentsRoutine,
+  getProjectTeamMembersRoutine,
+  assignProjectTeamMemberRoutine,
 } from "./project/project.routine";
 
 import {
   getComponentRoutine,
   editComponentRoutine,
   createComponentRoutine,
+  getComponentAssigneesRoutine,
+  assignComponentMemberRoutine,
   createComponentDetailsRoutine,
   getComponentDetailsByVersionRoutine,
 } from "./component/component.routine";
@@ -41,11 +45,15 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(editProjectRoutine.TRIGGER, projectSaga.editProject),
     yield takeLatest(createProjectRoutine.TRIGGER, projectSaga.createProject),
     yield takeLatest(getProjectComponentsRoutine.TRIGGER, projectSaga.getProjectComponents),
+    yield takeLatest(getProjectTeamMembersRoutine.TRIGGER, projectSaga.getProjectTeamMembers),
+    yield takeLatest(assignProjectTeamMemberRoutine.TRIGGER, projectSaga.assignProjectTeamMember),
 
     yield takeLatest(getComponentRoutine.TRIGGER, componentSaga.getComponent),
     yield takeLatest(editComponentRoutine.TRIGGER, componentSaga.editComponent),
     yield takeLatest(createComponentRoutine.TRIGGER, componentSaga.createComponent),
+    yield takeLatest(getComponentAssigneesRoutine.TRIGGER, componentSaga.getComponentAssignees),
     yield takeLatest(createComponentDetailsRoutine.TRIGGER, componentSaga.createComponentDetails),
+    yield takeLatest(assignComponentMemberRoutine.TRIGGER, componentSaga.assignComponentTeamMember),
     yield takeLatest(getComponentDetailsByVersionRoutine.TRIGGER, componentSaga.getComponentDetailsByVersion),
 
     yield takeLatest(getStaffRoutine.TRIGGER, organizationSaga.getStaff),

@@ -8,6 +8,8 @@ import {
   editComponentRoutine,
   createComponentRoutine,
   clearComponentWithDetails,
+  assignComponentMemberRoutine,
+  getComponentAssigneesRoutine,
   createComponentDetailsRoutine,
   clearComparisonComponentDetails,
   getComponentDetailsByVersionRoutine,
@@ -17,6 +19,7 @@ const initialState: IComponentReducer = {
   loading: 0,
   error: null,
   component: null,
+  componentAssignees: [],
   componentDetails: null,
   comparisonComponentDetails: null,
 };
@@ -26,6 +29,8 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     case getComponentRoutine.TRIGGER:
     case editComponentRoutine.TRIGGER:
     case createComponentRoutine.TRIGGER:
+    case assignComponentMemberRoutine.TRIGGER:
+    case getComponentAssigneesRoutine.TRIGGER:
     case createComponentDetailsRoutine.TRIGGER:
     case getComponentDetailsByVersionRoutine.TRIGGER: {
       return {
@@ -65,9 +70,18 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
       };
     }
 
+    case getComponentAssigneesRoutine.SUCCESS: {
+      return {
+        ...state,
+        componentAssignees: action.paeload.assignees,
+      }
+    }
+
     case getComponentRoutine.FAILURE:
     case editComponentRoutine.FAILURE:
     case createComponentRoutine.FAILURE:
+    case assignComponentMemberRoutine.FAILURE:
+    case getComponentAssigneesRoutine.FAILURE:
     case createComponentDetailsRoutine.FAILURE:
     case getComponentDetailsByVersionRoutine.FAILURE: {
       return {
@@ -79,6 +93,8 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     case getComponentRoutine.FULFILL:
     case editComponentRoutine.FULFILL:
     case createComponentRoutine.FULFILL:
+    case assignComponentMemberRoutine.FULFILL:
+    case getComponentAssigneesRoutine.FULFILL:
     case createComponentDetailsRoutine.FULFILL:
     case getComponentDetailsByVersionRoutine.FULFILL: {
       return {
