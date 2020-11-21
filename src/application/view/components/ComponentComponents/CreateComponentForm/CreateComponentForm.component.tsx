@@ -2,9 +2,9 @@ import React, { ChangeEvent, Component, MouseEvent, ReactNode } from "react";
 
 import { TextField } from "@material-ui/core";
 
-import { Editor } from "../UI/Inputs/Editor";
-import { PrimaryButton } from "../UI/Buttons/PrimaryButton";
-import { TCallback } from "../../../../resources/types/common.type";
+import { Editor } from "../../UI/Inputs/Editor";
+import { PrimaryButton } from "../../UI/Buttons/PrimaryButton";
+import { TCallback } from "../../../../../resources/types/common.type";
 
 import {
   SAVE,
@@ -15,12 +15,12 @@ import {
   REQUIREMENTS,
   ESTIMATED_TIME,
   FUTURE_FEATURES,
-} from "../../../../resources/constants/strings";
+} from "../../../../../resources/constants/strings";
 
 import {
   ECreateComponentFields,
   ECreateComponentDetailsFields
-} from "../../../../resources/types/fields/createComponentField";
+} from "../../../../../resources/types/fields/createComponentField";
 
 import "./CreateComponentFrom.style.scss";
 

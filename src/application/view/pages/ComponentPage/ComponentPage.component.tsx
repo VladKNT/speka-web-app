@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
-import { ComponentInfo } from "../../components/ComponentInfo";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
+import { ComponentInfo } from "../../components/ComponentComponents/ComponentInfo";
 import { editComponentRoutine, getComponentRoutine } from "../../../data/component/component.routine";
 import { initialEditComponent, initialEditComponentDetails } from "../../../../resources/constants/component";
 

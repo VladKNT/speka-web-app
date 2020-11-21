@@ -6,10 +6,10 @@ import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
-import { CreateComponentForm } from "../../components/CreateComponentForm";
 import { COMPONENT_CREATION } from "../../../../resources/constants/strings";
 import { createComponentRoutine } from "../../../data/component/component.routine";
 import { ICreateComponentTriggerPayload } from "../../../../resources/types/component.type";
+import { CreateComponentForm } from "../../components/ComponentComponents/CreateComponentForm";
 
 import {
   ECreateComponentDetailsFields,

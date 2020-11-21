@@ -2,9 +2,9 @@ import React, { ChangeEvent, Component, ReactNode } from "react";
 
 import { Input, Select } from "@material-ui/core";
 
-import { TCallback } from "../../../../resources/types/common.type";
-import { EStatus, IComponent } from "../../../../resources/types/component.type";
-import { EEditComponentFields, IEditComponentFields } from "../../../../resources/types/fields/editComponentFields";
+import { TCallback } from "../../../../../resources/types/common.type";
+import { EStatus, IComponent } from "../../../../../resources/types/component.type";
+import { EEditComponentFields, IEditComponentFields } from "../../../../../resources/types/fields/editComponentFields";
 
 import {
   PHASE,
@@ -14,10 +14,10 @@ import {
   CREATION_DATE,
   COMPONENT_NAME,
   ESTIMATED_TIME,
-} from "../../../../resources/constants/strings";
+} from "../../../../../resources/constants/strings";
 
 import "./ComponentInfo.style.scss";
-import {EditButtons} from "../UI/Buttons/EditButtons";
+import {EditButtons} from "../../UI/Buttons/EditButtons";
 
 export interface IComponentInfoOwnProps {
   isEditing: boolean;

@@ -4,9 +4,9 @@ import SaveIcon from "@material-ui/icons/Save";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Modal, ModalProps, TextField } from "@material-ui/core";
 
-import { TCallback } from "../../../../resources/types/common.type";
-import { DESCRIPTION, PROJECT_NAME } from "../../../../resources/constants/strings";
-import { ECreateProjectFields } from "../../../../resources/types/fields/createProjectFields";
+import { TCallback } from "../../../../../resources/types/common.type";
+import { DESCRIPTION, PROJECT_NAME } from "../../../../../resources/constants/strings";
+import { ECreateProjectFields } from "../../../../../resources/types/fields/createProjectFields";
 
 import "./CreateProjectModal.style.scss";
 

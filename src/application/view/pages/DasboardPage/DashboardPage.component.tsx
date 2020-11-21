@@ -9,7 +9,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { IRootReducer } from "../../../data/root.reducer";
 import { TCallback } from "../../../../resources/types/common.type";
 import { ProjectTable } from "../../components/UI/Tables/ProjectTable";
-import { CreateProjectModal } from "../../components/CreateProjectModal";
+import { CreateProjectModal } from "../../components/ProjectComponents/CreateProjectModal";
 import { ECreateProjectFields } from "../../../../resources/types/fields/createProjectFields";
 import { createProjectRoutine, getProjectsRoutine } from "../../../data/project/project.routine";
 import { ICreateProjectTriggerPayload, IProject } from "../../../../resources/types/project.type";

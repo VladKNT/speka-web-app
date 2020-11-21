@@ -2,11 +2,11 @@ import React, { ChangeEvent, Component, ReactNode } from "react";
 
 import { Input, Select } from "@material-ui/core";
 
-import { EditButtons } from "../UI/Buttons/EditButtons";
-import { TCallback } from "../../../../resources/types/common.type";
-import { EPhase, IProject } from "../../../../resources/types/project.type";
-import { EEditProjectFields } from "../../../../resources/types/fields/editProjectFields";
-import { CREATION_DATE, DESCRIPTION, LAST_UPDATE, PHASE, PROJECT_NAME } from "../../../../resources/constants/strings";
+import { EditButtons } from "../../UI/Buttons/EditButtons";
+import { TCallback } from "../../../../../resources/types/common.type";
+import { EPhase, IProject } from "../../../../../resources/types/project.type";
+import { EEditProjectFields } from "../../../../../resources/types/fields/editProjectFields";
+import { CREATION_DATE, DESCRIPTION, LAST_UPDATE, PHASE, PROJECT_NAME } from "../../../../../resources/constants/strings";
 
 import "./ProjectInfo.style.scss";
 

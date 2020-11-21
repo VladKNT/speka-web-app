@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
-import { ProjectInfo } from "../../components/ProjectInfo";
 import { IComponent } from "../../../../resources/types/component.type";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
 import { ComponentTable } from "../../components/UI/Tables/ComponentTable";
+import { ProjectInfo } from "../../components/ProjectComponents/ProjectInfo";
 import { EEditProjectFields } from "../../../../resources/types/fields/editProjectFields";
 
 import {
