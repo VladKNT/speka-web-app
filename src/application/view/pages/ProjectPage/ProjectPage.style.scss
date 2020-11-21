@@ -7,11 +7,12 @@
 
   .project-button-container {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     justify-content: flex-end;
 
-    .project-add-button {
+    .project-button {
       color: $white;
+      margin-left: 10px;
       background: $btn-linear-gradient;
     }
   }

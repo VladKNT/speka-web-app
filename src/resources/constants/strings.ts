@@ -25,3 +25,4 @@ export const FUTURE_FEATURES = "Future features";
 export const CURRENT_VERSION = "Current version";
 export const COMPARE_VERSION = "Compare version";
 export const COMPONENT_CREATION = "Component creation";
+export const PROJECT_TEAM_MEMBERS = "Project team members";

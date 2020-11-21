@@ -40,7 +40,7 @@ export const PrivateRouter: FC = () => {
       <ContentWrapper>
         <Route exact path="/" component={DashboardPage} />
         <Route exact path="/project/:id" component={ProjectPage} />
-        <Route exact path="/component/:id" component={ComponentPage} />
+        <Route exact path="/project/:projectId/component/:id" component={ComponentPage} />
         <Route exact path="/project/:id/create-component" component={CreateComponentPage} />
 
         <Redirect to="/" />

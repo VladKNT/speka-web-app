@@ -1,0 +1,32 @@
+@import "src/resources/scss/variables/color";
+
+.b-members-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .paper {
+    width: 500px;
+    padding: 20px;
+    display: flex;
+    border-radius: 8px;
+    flex-direction: column;
+    background-color: $white;
+
+    .buttons-container {
+      display: flex;
+      justify-content: flex-end;
+
+      .save-button {
+        color: $white;
+        background: $btn-linear-gradient;
+      }
+
+      .close-button {
+        color: $white;
+        background: $red;
+        margin-right: 10px;
+      }
+    }
+  }
+}
