@@ -35,4 +35,10 @@ export class ComponentService extends ApiService {
   createComponentDetails(id: string, createComponentDetailsDto: ICreateComponentDetailsDto): Promise<IComponentDetails> {
     return this.axiosInstance.post(`${COMPONENT_URL}/${id}/${COMPONENT_DETAILS_URL}`, createComponentDetailsDto);
   }
+
+  getComponentDetailsByVersion(id: string, version: number): Promise<IComponentDetails> {
+    return this.axiosInstance.get(`${COMPONENT_URL}/${id}/${COMPONENT_DETAILS_URL}`, {
+      params: { version },
+    });
+  }
 }

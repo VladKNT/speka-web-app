@@ -7,7 +7,10 @@ import {
   getComponentRoutine,
   editComponentRoutine,
   createComponentRoutine,
-  createComponentDetailsRoutine
+  clearComponentWithDetails,
+  createComponentDetailsRoutine,
+  clearComparisonComponentDetails,
+  getComponentDetailsByVersionRoutine,
 } from "./component.routine";
 
 const initialState: IComponentReducer = {
@@ -23,7 +26,8 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     case getComponentRoutine.TRIGGER:
     case editComponentRoutine.TRIGGER:
     case createComponentRoutine.TRIGGER:
-    case createComponentDetailsRoutine.TRIGGER: {
+    case createComponentDetailsRoutine.TRIGGER:
+    case getComponentDetailsByVersionRoutine.TRIGGER: {
       return {
         ...state,
         loading: state.loading + 1,
@@ -54,10 +58,18 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
       };
     }
 
+    case getComponentDetailsByVersionRoutine.SUCCESS: {
+      return {
+        ...state,
+        comparisonComponentDetails: action.payload.componentDetails,
+      };
+    }
+
     case getComponentRoutine.FAILURE:
     case editComponentRoutine.FAILURE:
     case createComponentRoutine.FAILURE:
-    case createComponentDetailsRoutine.FAILURE: {
+    case createComponentDetailsRoutine.FAILURE:
+    case getComponentDetailsByVersionRoutine.FAILURE: {
       return {
         ...state,
         error: action.payload.error,
@@ -67,11 +79,28 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     case getComponentRoutine.FULFILL:
     case editComponentRoutine.FULFILL:
     case createComponentRoutine.FULFILL:
-    case createComponentDetailsRoutine.FULFILL: {
+    case createComponentDetailsRoutine.FULFILL:
+    case getComponentDetailsByVersionRoutine.FULFILL: {
       return {
         ...state,
         loading: state.loading - 1,
       };
+    }
+
+    case clearComponentWithDetails.TRIGGER: {
+      return {
+        ...state,
+        component: null,
+        componentDetails: null,
+        comparisonComponentDetails: null,
+      }
+    }
+
+    case clearComparisonComponentDetails.TRIGGER: {
+      return {
+        ...state,
+        comparisonComponentDetails: null,
+      }
     }
 
     case signOutRoutine.TRIGGER: {

@@ -1,3 +1,5 @@
+@import "src/resources/scss/variables/color";
+
 .b-component-info {
   flex: 1;
   display: flex;
@@ -17,8 +19,9 @@
   }
 
   .component-info-title {
-    font-size: 18px;
-    font-weight: bold;
+    color: $grey;
+    font-size: 14px;
+    font-weight: 500;
     margin-bottom: 5px;
   }
 }

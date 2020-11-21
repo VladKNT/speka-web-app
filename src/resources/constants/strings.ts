@@ -22,4 +22,6 @@ export const COMPONENT_NAME = "Component name";
 export const CREATE_PROJECT = "Create project";
 export const CONTACT_NUMBER = "Contact number";
 export const FUTURE_FEATURES = "Future features";
+export const CURRENT_VERSION = "Current version";
+export const COMPARE_VERSION = "Compare version";
 export const COMPONENT_CREATION = "Component creation";

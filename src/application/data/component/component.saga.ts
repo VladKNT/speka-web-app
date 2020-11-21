@@ -9,6 +9,7 @@ import {
   editComponentRoutine,
   createComponentRoutine,
   createComponentDetailsRoutine,
+  getComponentDetailsByVersionRoutine,
 } from "./component.routine";
 
 const ComponentApi = new ComponentService();
@@ -77,5 +78,20 @@ export function* createComponentDetails(action: ReturnType<typeof createComponen
     yield put(createComponentDetailsRoutine.failure({ error: error.message }));
   } finally {
     yield put(createComponentDetailsRoutine.fulfill());
+  }
+}
+
+export function* getComponentDetailsByVersion(action: ReturnType<typeof getComponentDetailsByVersionRoutine.trigger>) {
+  try {
+    yield put(getComponentDetailsByVersionRoutine.request());
+
+    const { id, version } = action.payload;
+    const componentDetails = yield ComponentApi.getComponentDetailsByVersion(id, version);
+
+    yield put(getComponentDetailsByVersionRoutine.success({ componentDetails }));
+  } catch (error) {
+    yield put(getComponentDetailsByVersionRoutine.failure({ error: error.message }));
+  } finally {
+    yield put(getComponentDetailsByVersionRoutine.fulfill());
   }
 }

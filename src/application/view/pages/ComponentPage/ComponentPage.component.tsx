@@ -13,7 +13,10 @@ import { initialEditComponent, initialEditComponentDetails } from "../../../../r
 import {
   getComponentRoutine,
   editComponentRoutine,
+  clearComponentWithDetails,
   createComponentDetailsRoutine,
+  clearComparisonComponentDetails,
+  getComponentDetailsByVersionRoutine,
 } from "../../../data/component/component.routine";
 
 import {
@@ -23,6 +26,7 @@ import {
   IGetComponentTriggerPayload,
   IEditComponentTriggerPayload,
   ICreateComponentDetailsTriggerPayload,
+  IGetComponentDetailsByVersionTriggerPayload,
 } from "../../../../resources/types/component.type";
 
 import {
@@ -32,20 +36,27 @@ import {
   EEditComponentDetailsFields,
 } from "../../../../resources/types/fields/editComponentFields";
 
+import "./ComponentPage.style.scss";
+
 export interface IComponentPageOwnProps {
   loading: number;
   component: IComponent | null;
   componentDetails: IComponentDetails | null;
   comparisonComponentDetails: IComponentDetails | null;
+
+  onClearComponentWithDetails: () => void;
+  onClearComparisonComponentDetails: () => void;
   onGetComponent: (payload: IGetComponentTriggerPayload) => void;
   onEditComponent: (payload: IEditComponentTriggerPayload) =>  void;
   onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => void;
+  onGetComponentDetailsByVersion: (payload: IGetComponentDetailsByVersionTriggerPayload) => void;
 }
 
 export interface IComponentPageInjectedProps extends RouteComponentProps<IIdRouteParam> {}
 export interface IComponentPageProps extends IComponentPageOwnProps, IComponentPageInjectedProps {}
 
 interface IState {
+  compareVersion: number;
   editComponent: boolean;
   editComponentDetails: boolean;
   componentEditing: IEditComponentFields;
@@ -57,6 +68,7 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
     super(props);
 
     this.state = {
+      compareVersion: 0,
       editComponent: false,
       editComponentDetails: false,
       componentEditing: initialEditComponent,
@@ -69,6 +81,11 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
 
     const { id } = match.params;
     onGetComponent({ id });
+  }
+
+  componentWillUnmount(): void {
+    const { onClearComponentWithDetails } = this.props;
+    onClearComponentWithDetails();
   }
 
   onChangeComponentEditing = (field: EEditComponentFields, value: string): void => {
@@ -165,10 +182,30 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
     this.onEndComponentDetailsEditing();
   }
 
+  onChangeCompareVersion = (version: number): void => {
+    const { match, onClearComparisonComponentDetails, onGetComponentDetailsByVersion } = this.props;
+    const { id } = match.params;
+
+    this.setState({ compareVersion: version });
+
+    console.info({ version });
+    if (version) {
+      onGetComponentDetailsByVersion({ id, version });
+    } else {
+      onClearComparisonComponentDetails();
+    }
+  }
 
   render(): ReactNode {
-    const { component, componentDetails } = this.props;
-    const { editComponent, editComponentDetails, componentEditing, componentDetailsEditing } = this.state;
+    const { component, componentDetails, comparisonComponentDetails } = this.props;
+
+    const {
+      editComponent,
+      compareVersion,
+      componentEditing,
+      editComponentDetails,
+      componentDetailsEditing,
+    } = this.state;
 
     if (!component || !componentDetails) {
       return null;
@@ -187,13 +224,16 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
         />
 
         <ComponentDetailsInfo
+          compareVersion={compareVersion}
           isEditing={editComponentDetails}
           componentDetails={componentDetails}
           onSaveEditing={this.onSaveComponentDetailsInfo}
           onChange={this.onChangeComponentDetailsEditing}
           onEndEditing={this.onEndComponentDetailsEditing}
           componentDetailsEditing={componentDetailsEditing}
+          onChangeCompareVersion={this.onChangeCompareVersion}
           onStartEditing={this.onStartComponentDetailsEditing}
+          comparisonComponentDetails={comparisonComponentDetails}
         />
       </div>
     )
@@ -213,9 +253,12 @@ const mapStateToProps = (state: IRootReducer) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
+    onClearComponentWithDetails: () => dispatch(clearComponentWithDetails()),
+    onClearComparisonComponentDetails: () => dispatch(clearComparisonComponentDetails()),
     onGetComponent: (payload: IGetComponentTriggerPayload) => dispatch(getComponentRoutine.trigger(payload)),
     onEditComponent: (payload: IEditComponentTriggerPayload) => dispatch(editComponentRoutine.trigger(payload)),
     onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => dispatch(createComponentDetailsRoutine.trigger(payload)),
+    onGetComponentDetailsByVersion: (payload: IGetComponentDetailsByVersionTriggerPayload) => dispatch(getComponentDetailsByVersionRoutine.trigger(payload)),
   }
 }
 

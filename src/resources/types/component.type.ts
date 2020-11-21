@@ -105,3 +105,17 @@ export interface ICreateComponentDetailsTriggerPayload extends ICreateComponentD
 export interface ICreateComponentDetailsSuccessPayload {
   componentDetails: IComponentDetails;
 }
+
+
+// Get Component Details By Version
+
+export interface IGetComponentDetailsByVersionErrorPayload extends IErrorPayload {}
+
+export interface IGetComponentDetailsByVersionSuccessPayload {
+  componentDetails: IComponentDetails;
+}
+
+export interface IGetComponentDetailsByVersionTriggerPayload {
+  id: string;
+  version: number;
+}

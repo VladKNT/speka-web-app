@@ -21,7 +21,8 @@ import {
   getComponentRoutine,
   editComponentRoutine,
   createComponentRoutine,
-  createComponentDetailsRoutine
+  createComponentDetailsRoutine,
+  getComponentDetailsByVersionRoutine,
 } from "./component/component.routine";
 
 
@@ -43,5 +44,6 @@ export function* rootSaga(): Generator<AnyAction> {
     yield takeLatest(editComponentRoutine.TRIGGER, componentSaga.editComponent),
     yield takeLatest(createComponentRoutine.TRIGGER, componentSaga.createComponent),
     yield takeLatest(createComponentDetailsRoutine.TRIGGER, componentSaga.createComponentDetails),
+    yield takeLatest(getComponentDetailsByVersionRoutine.TRIGGER, componentSaga.getComponentDetailsByVersion),
   ]);
 }
