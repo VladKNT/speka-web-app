@@ -26,9 +26,9 @@ export interface IMembersModalOwnProps {
 }
 
 export interface IMembersModalInjectedProps extends Omit<ModalProps, "children"> {}
-export interface IMembersModalModalProps extends IMembersModalOwnProps, IMembersModalInjectedProps {}
+export interface IMembersModalProps extends IMembersModalOwnProps, IMembersModalInjectedProps {}
 
-class MembersModal extends Component<IMembersModalModalProps> {
+class MembersModal extends Component<IMembersModalProps> {
   onClose = (): void => {
     const { onClose } = this.props;
     if (onClose) {
@@ -69,7 +69,7 @@ class MembersModal extends Component<IMembersModalModalProps> {
     return (
       <Modal {...modalProps} onClose={onClose} className="b-members-modal">
         <div className="paper">
-          <div>{title}</div>
+          <div className="title">{title}</div>
 
           <List>
             {this.renderListItems()}

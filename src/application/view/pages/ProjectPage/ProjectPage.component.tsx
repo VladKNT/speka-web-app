@@ -14,15 +14,17 @@ import { IComponent } from "../../../../resources/types/component.type";
 import { IIdRouteParam } from "../../../../resources/types/common.type";
 import { ComponentTable } from "../../components/UI/Tables/ComponentTable";
 import { ProjectInfo } from "../../components/ProjectComponents/ProjectInfo";
-import { PROJECT_TEAM_MEMBERS } from "../../../../resources/constants/strings";
+import { AssignMembersModal } from "../../components/Modals/AssignMemberModal";
 import { getStaffRoutine } from "../../../data/organization/organization.routine";
 import { EEditProjectFields } from "../../../../resources/types/fields/editProjectFields";
+import { ASSIGN_MEMBER_TO_PROJECT, PROJECT_TEAM_MEMBERS } from "../../../../resources/constants/strings";
 
 import {
   getProjectRoutine,
   editProjectRoutine,
   getProjectComponentsRoutine,
   getProjectTeamMembersRoutine,
+  assignProjectTeamMemberRoutine,
 } from "../../../data/project/project.routine";
 
 import {
@@ -31,12 +33,14 @@ import {
   IGetProjectTriggerPayload,
   IEditProjectTriggerPayload,
   IGetTeamMembersTriggerPayload,
+  IAssignTeamMemberTriggerPayload,
   IGetProjectComponentsTriggerPayload,
 } from "../../../../resources/types/project.type";
 
 import "./ProjectPage.style.scss";
 
 export interface IProjectPageOwnProps {
+  staff: IUser[];
   loading: number;
   teamMembers: IUser[];
   project: IProject | null;
@@ -46,6 +50,7 @@ export interface IProjectPageOwnProps {
   onGetProject: (payload: IGetProjectTriggerPayload) => void,
   onEditProject: (payload: IEditProjectTriggerPayload) => void,
   onGetTeamMembers: (payload: IGetTeamMembersTriggerPayload) => void,
+  onAssignTeamMember: (payload: IAssignTeamMemberTriggerPayload) => void,
   onGetProjectComponents: (payload: IGetProjectComponentsTriggerPayload) => void,
 }
 
@@ -55,6 +60,7 @@ export interface IProjectPageProps extends IProjectPageOwnProps, IProjectPageInj
 interface IState {
   isEditing: boolean;
   showTeamMembersModal: boolean;
+  showAssignMembersModal: boolean;
 
   editInfo: {
     [EEditProjectFields.NAME]: string;
@@ -77,6 +83,7 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
       isEditing: false,
       editInfo: initialEditInfo,
       showTeamMembersModal: false,
+      showAssignMembersModal: false,
     }
   }
 
@@ -134,10 +141,29 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
     history.push(`${projectId}/component/${id}`);
   };
 
-  onToggleTeamMembersModal = () => {
+  onToggleTeamMembersModal = (): void => {
     this.setState((prevState) => ({
       showTeamMembersModal: !prevState.showTeamMembersModal,
     }));
+  }
+
+  onToggleAssignMembersModal = (): void => {
+    this.setState((prevState) => ({
+      showAssignMembersModal: !prevState.showAssignMembersModal,
+    }));
+  }
+
+  onOpenAssignMemberModal = (): void => {
+    this.onToggleTeamMembersModal();
+    this.onToggleAssignMembersModal();
+  }
+
+  onAssignTeamMember = (teamMemberId: string): void => {
+    const { match, onAssignTeamMember } = this.props;
+    const { id } = match.params;
+
+    onAssignTeamMember({ id, teamMemberId });
+    this.onToggleAssignMembersModal();
   }
 
   onChangeField = (field: EEditProjectFields, value: string | EPhase): void => {
@@ -153,8 +179,8 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
   }
 
   render(): ReactNode {
-    const { project, components, teamMembers } = this.props;
-    const { isEditing, editInfo, showTeamMembersModal } = this.state;
+    const { staff, project, components, teamMembers } = this.props;
+    const { isEditing, editInfo, showTeamMembersModal, showAssignMembersModal } = this.state;
 
     if (!project) {
       return null;
@@ -189,10 +215,18 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
 
         <MembersModal
           users={teamMembers}
-          onAddMember={() => {console.info("s")}}
           open={showTeamMembersModal}
           title={PROJECT_TEAM_MEMBERS}
           onClose={this.onToggleTeamMembersModal}
+          onAddMember={this.onOpenAssignMemberModal}
+        />
+
+        <AssignMembersModal
+          users={staff}
+          open={showAssignMembersModal}
+          title={ASSIGN_MEMBER_TO_PROJECT}
+          onAddMember={this.onAssignTeamMember}
+          onClose={this.onToggleAssignMembersModal}
         />
       </div>
     );
@@ -200,9 +234,11 @@ class ProjectPage extends Component<IProjectPageProps, IState> {
 }
 
 const mapStateToProps = (state: IRootReducer) => {
+  const { staff } = state.organizationReducer;
   const { loading, selectedProject, selectedProjectComponents, selectedProjectTeamMembers } = state.projectReducer;
 
   return {
+    staff,
     loading,
     project: selectedProject,
     components: selectedProjectComponents,
@@ -216,6 +252,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     onGetProject: (payload: IGetProjectTriggerPayload) => dispatch(getProjectRoutine.trigger(payload)),
     onEditProject: (payload: IEditProjectTriggerPayload) => dispatch(editProjectRoutine.trigger(payload)),
     onGetTeamMembers: (payload: IGetTeamMembersTriggerPayload) => dispatch(getProjectTeamMembersRoutine.trigger(payload)),
+    onAssignTeamMember: (payload: IAssignTeamMemberTriggerPayload) => dispatch(assignProjectTeamMemberRoutine.trigger(payload)),
     onGetProjectComponents: (payload: IGetProjectComponentsTriggerPayload) => dispatch(getProjectComponentsRoutine.trigger(payload)),
   }
 }
