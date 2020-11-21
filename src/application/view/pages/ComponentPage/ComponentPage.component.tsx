@@ -5,15 +5,23 @@ import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router-dom";
 
 import { IRootReducer } from "../../../data/root.reducer";
-import { IIdRouteParam } from "../../../../resources/types/common.type";
+import { IUser } from "../../../../resources/types/user.type";
+import { MembersModal } from "../../components/Modals/MembersModal";
+import { AssignMembersModal}  from "../../components/Modals/AssignMemberModal";
+import { IProjectIDRouteParam } from "../../../../resources/types/common.type";
 import { ComponentInfo } from "../../components/ComponentComponents/ComponentInfo";
+import { getProjectTeamMembersRoutine } from "../../../data/project/project.routine";
+import { IGetTeamMembersTriggerPayload } from "../../../../resources/types/project.type";
 import { ComponentDetailsInfo } from "../../components/ComponentComponents/ComponentDetailsInfo";
+import { ASSIGN_MEMBER_TO_COMPONENT, COMPONENT_ASSIGNEES } from "../../../../resources/constants/strings";
 import { initialEditComponent, initialEditComponentDetails } from "../../../../resources/constants/component";
 
 import {
   getComponentRoutine,
   editComponentRoutine,
   clearComponentWithDetails,
+  getComponentAssigneesRoutine,
+  assignComponentMemberRoutine,
   createComponentDetailsRoutine,
   clearComparisonComponentDetails,
   getComponentDetailsByVersionRoutine,
@@ -24,7 +32,9 @@ import {
   IComponentDetails,
   IEditComponentDto,
   IGetComponentTriggerPayload,
+  IGetAssigneesTriggerPayload,
   IEditComponentTriggerPayload,
+  IAssignComponentMemberTriggerPayload,
   ICreateComponentDetailsTriggerPayload,
   IGetComponentDetailsByVersionTriggerPayload,
 } from "../../../../resources/types/component.type";
@@ -41,24 +51,31 @@ import "./ComponentPage.style.scss";
 export interface IComponentPageOwnProps {
   loading: number;
   component: IComponent | null;
+  teamMembers: IUser[];
+  componentAssignees: IUser[];
   componentDetails: IComponentDetails | null;
   comparisonComponentDetails: IComponentDetails | null;
 
   onClearComponentWithDetails: () => void;
   onClearComparisonComponentDetails: () => void;
+  onGetAssignees: (payload: IGetAssigneesTriggerPayload) => void,
   onGetComponent: (payload: IGetComponentTriggerPayload) => void;
   onEditComponent: (payload: IEditComponentTriggerPayload) =>  void;
+  onGetTeamMembers: (payload: IGetTeamMembersTriggerPayload) => void,
+  onAssignMember: (payload: IAssignComponentMemberTriggerPayload) => void,
   onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => void;
   onGetComponentDetailsByVersion: (payload: IGetComponentDetailsByVersionTriggerPayload) => void;
 }
 
-export interface IComponentPageInjectedProps extends RouteComponentProps<IIdRouteParam> {}
+export interface IComponentPageInjectedProps extends RouteComponentProps<IProjectIDRouteParam> {}
 export interface IComponentPageProps extends IComponentPageOwnProps, IComponentPageInjectedProps {}
 
 interface IState {
   compareVersion: number;
   editComponent: boolean;
   editComponentDetails: boolean;
+  showTeamMembersModal: boolean;
+  showAssignMembersModal: boolean;
   componentEditing: IEditComponentFields;
   componentDetailsEditing: IEditComponentDetailsFields;
 }
@@ -71,16 +88,21 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
       compareVersion: 0,
       editComponent: false,
       editComponentDetails: false,
+      showTeamMembersModal: false,
+      showAssignMembersModal: false,
       componentEditing: initialEditComponent,
       componentDetailsEditing: initialEditComponentDetails,
     }
   }
 
   componentDidMount(): void {
-    const { match, onGetComponent } = this.props;
+    const { match, onGetComponent, onGetAssignees, onGetTeamMembers } = this.props;
 
-    const { id } = match.params;
+    const { id, projectId } = match.params;
+
     onGetComponent({ id });
+    onGetAssignees({ id });
+    onGetTeamMembers({ id: projectId });
   }
 
   componentWillUnmount(): void {
@@ -215,8 +237,34 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
     }
   }
 
+  onToggleTeamMembersModal = (): void => {
+    this.setState((prevState) => ({
+      showTeamMembersModal: !prevState.showTeamMembersModal,
+    }));
+  }
+
+  onToggleAssignMembersModal = (): void => {
+    this.setState((prevState) => ({
+      showAssignMembersModal: !prevState.showAssignMembersModal,
+    }));
+  }
+
+  onOpenAssignMemberModal = (): void => {
+    this.onToggleTeamMembersModal();
+    this.onToggleAssignMembersModal();
+  }
+
+  onAssignTeamMember = (teamMemberId: string): void => {
+    const { match, onAssignMember } = this.props;
+    const { id } = match.params;
+
+    onAssignMember({ id, teamMemberId });
+    this.onToggleAssignMembersModal();
+  }
+
   render(): ReactNode {
-    const { component, componentDetails, comparisonComponentDetails } = this.props;
+    const { showTeamMembersModal, showAssignMembersModal } = this.state;
+    const { component, componentAssignees, teamMembers, componentDetails, comparisonComponentDetails } = this.props;
 
     const {
       editComponent,
@@ -239,6 +287,7 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
           onEndEditing={this.onEndComponentEditing}
           onSaveEditing={this.onSaveComponentEditing}
           onStartEditing={this.onStartComponentEditing}
+          onOpenAssigneesModal={this.onToggleTeamMembersModal}
         />
 
         <ComponentDetailsInfo
@@ -253,28 +302,50 @@ class ComponentPage extends Component<IComponentPageProps, IState> {
           onStartEditing={this.onStartComponentDetailsEditing}
           comparisonComponentDetails={comparisonComponentDetails}
         />
+
+        <MembersModal
+          users={componentAssignees}
+          open={showTeamMembersModal}
+          title={COMPONENT_ASSIGNEES}
+          onClose={this.onToggleTeamMembersModal}
+          onAddMember={this.onOpenAssignMemberModal}
+        />
+
+        <AssignMembersModal
+          users={teamMembers}
+          open={showAssignMembersModal}
+          title={ASSIGN_MEMBER_TO_COMPONENT}
+          onAddMember={this.onAssignTeamMember}
+          onClose={this.onToggleAssignMembersModal}
+        />
       </div>
     )
   }
 }
 
 const mapStateToProps = (state: IRootReducer) => {
-  const { loading, component, componentDetails, comparisonComponentDetails } = state.componentReducer;
+  const { selectedProjectTeamMembers } = state.projectReducer;
+  const { loading, component, componentAssignees, componentDetails, comparisonComponentDetails } = state.componentReducer;
 
   return {
     loading,
     component,
     componentDetails,
+    componentAssignees,
     comparisonComponentDetails,
+    teamMembers: selectedProjectTeamMembers,
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
-    onClearComponentWithDetails: () => dispatch(clearComponentWithDetails()),
-    onClearComparisonComponentDetails: () => dispatch(clearComparisonComponentDetails()),
+    onClearComponentWithDetails: () => dispatch(clearComponentWithDetails.trigger()),
+    onClearComparisonComponentDetails: () => dispatch(clearComparisonComponentDetails.trigger()),
     onGetComponent: (payload: IGetComponentTriggerPayload) => dispatch(getComponentRoutine.trigger(payload)),
     onEditComponent: (payload: IEditComponentTriggerPayload) => dispatch(editComponentRoutine.trigger(payload)),
+    onGetAssignees: (payload: IGetAssigneesTriggerPayload) => dispatch(getComponentAssigneesRoutine.trigger(payload)),
+    onGetTeamMembers: (payload: IGetTeamMembersTriggerPayload) => dispatch(getProjectTeamMembersRoutine.trigger(payload)),
+    onAssignMember: (payload: IAssignComponentMemberTriggerPayload) => dispatch(assignComponentMemberRoutine.trigger(payload)),
     onCreateComponentDetails: (payload: ICreateComponentDetailsTriggerPayload) => dispatch(createComponentDetailsRoutine.trigger(payload)),
     onGetComponentDetailsByVersion: (payload: IGetComponentDetailsByVersionTriggerPayload) => dispatch(getComponentDetailsByVersionRoutine.trigger(payload)),
   }

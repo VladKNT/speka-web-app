@@ -9,3 +9,7 @@ export interface IErrorPayload {
 export interface IIdRouteParam {
   id: string;
 }
+
+export interface IProjectIDRouteParam extends IIdRouteParam {
+  projectId: string;
+}

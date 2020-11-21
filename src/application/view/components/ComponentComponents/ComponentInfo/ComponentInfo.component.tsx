@@ -1,6 +1,8 @@
 import React, { ChangeEvent, Component, ReactNode } from "react";
 
+import GroupIcon from "@material-ui/icons/Group";
 import { Input, Select } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 
 import { EditButtons } from "../../UI/Buttons/EditButtons";
 import { TCallback } from "../../../../../resources/types/common.type";
@@ -27,6 +29,7 @@ export interface IComponentInfoOwnProps {
   onEndEditing: TCallback;
   onSaveEditing: TCallback;
   onStartEditing: TCallback;
+  onOpenAssigneesModal: TCallback;
   onChange: (field: EEditComponentFields, value: string) => void;
 }
 
@@ -132,7 +135,7 @@ class ComponentInfo extends Component<IComponentInfoProps> {
   }
 
   render(): ReactNode {
-    const { component, isEditing, onEndEditing, onSaveEditing, onStartEditing } = this.props;
+    const { component, isEditing, onEndEditing, onSaveEditing, onStartEditing, onOpenAssigneesModal } = this.props;
 
     return (
       <div className="b-component-info">
@@ -183,6 +186,10 @@ class ComponentInfo extends Component<IComponentInfoProps> {
           onSave={onSaveEditing}
           onStart={onStartEditing}
         />
+
+        <IconButton className="assignees-button" onClick={onOpenAssigneesModal}>
+          <GroupIcon />
+        </IconButton>
       </div>
     );
   }

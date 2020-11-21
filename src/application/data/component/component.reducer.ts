@@ -73,7 +73,7 @@ export const componentReducer = (state = initialState, action: AnyAction): IComp
     case getComponentAssigneesRoutine.SUCCESS: {
       return {
         ...state,
-        componentAssignees: action.paeload.assignees,
+        componentAssignees: action.payload.assignees,
       }
     }
 
